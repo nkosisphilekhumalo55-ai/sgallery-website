@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>TradeVault</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+-webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+width:100%;
+overflow-x:hidden;
+background:#050505;
+color:white;
+}
+
+/* MATTE BLACK + MAROON THEME */
+
+body::before{
+content:'';
+position:fixed;
+top:-200px;
+right:-200px;
+width:500px;
+height:500px;
+background:rgba(128,0,32,0.18);
+filter:blur(150px);
+z-index:-1;
+}
+
+body::after{
+content:'';
+position:fixed;
+bottom:-250px;
+left:-250px;
+width:500px;
+height:500px;
+background:rgba(90,0,20,0.18);
+filter:blur(150px);
+z-index:-1;
+}
+
+.container{
+display:flex;
+min-height:100vh;
+width:100%;
+}
+
+.sidebar{
+width:260px;
+background:rgba(10,10,10,0.96);
+backdrop-filter:blur(18px);
+padding:30px 20px;
+position:fixed;
+left:-260px;
+top:0;
+height:100vh;
+border-right:1px solid rgba(128,0,32,0.25);
+transition:0.3s;
+z-index:2000;
+overflow-y:auto;
+}
+
+.sidebar.active{
+left:0;
+}
+
+.logo{
+font-size:28px;
+font-weight:700;
+color:#800020;
+margin-bottom:40px;
+}
+
+.sidebar nav{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.sidebar nav a{
+text-decoration:none;
+color:#8A8A8A;
+padding:15px;
+border-radius:16px;
+cursor:pointer;
+transition:0.3s;
+background:rgba(255,255,255,0.03);
+font-size:15px;
+}
+
+.sidebar nav a:hover{
+background:rgba(128,0,32,0.15);
+color:white;
+}
+
+.sidebar nav a.active{
+background:#800020;
+color:white;
+font-weight:700;
+}
+
+.overlay{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.6);
+display:none;
+z-index:1500;
+}
+
+.overlay.active{
+display:block;
+}
+
+.main{
+width:100%;
+padding:20px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+margin-bottom:25px;
+flex-wrap:wrap;
+}
+
+.menu-btn{
+width:52px;
+height:52px;
+border-radius:14px;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:28px;
+background:rgba(128,0,32,0.15);
+border:1px solid rgba(128,0,32,0.35);
+cursor:pointer;
+}
+
+.welcome-block{
+flex:1;
+min-width:0;
+}
+
+.welcome-block h1{
+font-size:24px;
+font-weight:700;
+line-height:1.2;
+background:linear-gradient(90deg,#800020,#ffffff,#800020);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.welcome-block p{
+color:#9a9a9a;
+font-size:11px;
+margin-top:8px;
+letter-spacing:1px;
+text-transform:uppercase;
+}
+
+.add-btn{
+padding:12px 16px;
+font-size:14px;
+}
+
+.back-btn{
+margin-bottom:18px;
+display:inline-flex;
+align-items:center;
+gap:8px;
+padding:12px 16px;
+background:rgba(128,0,32,0.12);
+border-radius:14px;
+cursor:pointer;
+font-size:14px;
+font-weight:600;
+border:1px solid rgba(128,0,32,0.25);
+}
+
+.stats{
+display:grid;
+grid-template-columns:1fr;
+gap:15px;
+margin-bottom:20px;
+}
+
+.card{
+background:rgba(18,18,18,0.88);
+backdrop-filter:blur(20px);
+padding:18px;
+border-radius:20px;
+border:1px solid rgba(128,0,32,0.18);
+overflow:hidden;
+box-shadow:0 0 25px rgba(128,0,32,0.08);
+}
+
+.stat-title{
+font-size:13px;
+color:#9e9e9e;
+margin-bottom:10px;
+}
+
+.stat-value{
+font-size:28px;
+font-weight:700;
+}
+
+button{
+background:rgba(128,0,32,0.25);
+color:#fff;
+font-weight:700;
+border:1px solid rgba(128,0,32,0.4);
+padding:14px 20px;
+border-radius:14px;
+cursor:pointer;
+transition:0.3s;
+}
+
+button:hover{
+background:rgba(128,0,32,0.4);
+}
+
+.market{
+display:grid;
+grid-template-columns:1fr;
+gap:12px;
+margin-bottom:20px;
+}
+
+.pair{
+background:rgba(18,18,18,0.92);
+padding:15px;
+border-radius:14px;
+border-left:3px solid #800020;
+}
+
+.up{
+color:#00ff88;
+}
+
+.down{
+color:#ff4d4d;
+}
+
+.tag{
+font-size:11px;
+padding:4px 8px;
+border-radius:10px;
+background:rgba(128,0,32,0.15);
+display:inline-block;
+margin-top:6px;
+}
+
+.trade-card{
+margin-bottom:15px;
+}
+
+.balance-control{
+display:flex;
+flex-direction:column;
+gap:10px;
+margin-top:15px;
+}
+
+input,select,textarea{
+background:rgba(26,26,26,0.95);
+border:1px solid rgba(128,0,32,0.15);
+padding:14px;
+border-radius:12px;
+color:white;
+width:100%;
+font-size:16px;
+outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+border:1px solid rgba(128,0,32,0.5);
+}
+
+.modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,0.7);
+z-index:3000;
+padding:15px;
+}
+
+.modal-content{
+background:rgba(17,17,17,0.98);
+padding:20px;
+width:100%;
+max-width:420px;
+border-radius:20px;
+border:1px solid rgba(128,0,32,0.3);
+}
+
+.chart-container{
+height:420px;
+position:relative;
+}
+
+.execution-times{
+margin-top:18px;
+display:flex;
+justify-content:space-between;
+overflow-x:auto;
+gap:15px;
+padding-bottom:5px;
+}
+
+.execution-times span{
+font-size:12px;
+color:#888;
+min-width:50px;
+text-align:center;
+}
+
+.ai-float{
+position:fixed;
+bottom:20px;
+right:20px;
+width:62px;
+height:62px;
+border-radius:50%;
+background:rgba(128,0,32,0.18);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:26px;
+cursor:pointer;
+box-shadow:0 0 30px rgba(128,0,32,0.4);
+z-index:1000;
+border:1px solid rgba(128,0,32,0.35);
+}
+
+.ai-box{
+position:fixed;
+bottom:95px;
+right:10px;
+left:10px;
+background:rgba(12,12,12,0.98);
+border:1px solid rgba(128,0,32,0.3);
+border-radius:20px;
+padding:18px;
+display:none;
+z-index:1000;
+}
+
+.ai-messages{
+height:260px;
+overflow-y:auto;
+margin-bottom:12px;
+font-size:14px;
+line-height:1.6;
+}
+
+.ai-message{
+background:rgba(128,0,32,0.10);
+padding:12px;
+border-radius:12px;
+margin-bottom:10px;
+}
+
+.ai-input{
+display:flex;
+gap:10px;
+}
+
+.ai-input input{
+margin:0;
+}
+
+@media(min-width:768px){
+
+.main{
+padding:40px;
+}
+
+.market{
+grid-template-columns:repeat(2,1fr);
+}
+
+.stats{
+grid-template-columns:repeat(5,1fr);
+}
+
+.welcome-block h1{
+font-size:34px;
+}
+
+}
+
+@media(min-width:1100px){
+
+.market{
+grid-template-columns:repeat(4,1fr);
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<div class="container">
+
+<aside class="sidebar" id="sidebar">
+
+<div class="logo">TradeVault</div>
+
+<nav>
+<a class="active" onclick="show('dashboard',this)">Dashboard</a>
+<a onclick="show('journal',this)">Journal</a>
+<a onclick="show('analytics',this)">Analytics</a>
+<a onclick="show('psychology',this)">Psychology</a>
+<a onclick="show('settings',this)">Settings</a>
+</nav>
+
+</aside>
+
+<main class="main">
+
+<div id="dashboard">
+
+<div class="topbar">
+
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
+
+<div class="welcome-block">
+<h1>Welcome back, Nkosisphile Khumalo</h1>
+<p>Market Intelligence Terminal • Liquidity Execution Environment</p>
+</div>
+
+<button class="add-btn" onclick="openModal()">＋ Add Trade</button>
+
+</div>
+
+<div class="market" id="market"></div>
+
+<div class="stats">
+
+<div class="card">
+<div class="stat-title">Initial Balance</div>
+<div class="stat-value" id="initialBalance">R500.00</div>
+
+<div class="balance-control">
+<input type="number" id="balanceInput" placeholder="Set Initial Balance">
+<button onclick="changeBalance()">Update</button>
+</div>
+</div>
+
+<div class="card">
+<div class="stat-title">Current Balance</div>
+<div class="stat-value" id="balance">R500.00</div>
+</div>
+
+<div class="card">
+<div class="stat-title">Total P/L</div>
+<div class="stat-value" id="pl">R0.00</div>
+</div>
+
+<div class="card">
+<div class="stat-title">Trades</div>
+<div class="stat-value" id="tt">0</div>
+</div>
+
+<div class="card">
+<div class="stat-title">Winning Streak</div>
+<div class="stat-value" id="streak">0🔥</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="chart-container">
+<canvas id="chart"></canvas>
+</div>
+
+<div class="execution-times" id="executionTimes"></div>
+
+</div>
+
+</div>
+
+<div id="journal" style="display:none;">
+
+<div class="back-btn"
+onclick="show('dashboard',document.querySelectorAll('nav a')[0])">
+← Back
+</div>
+
+<h2 style="margin-bottom:20px;">Trading Journal</h2>
+
+<div id="list"></div>
+
+</div>
+
+<div id="analytics" style="display:none;">
+
+<div class="back-btn"
+onclick="show('dashboard',document.querySelectorAll('nav a')[0])">
+← Back
+</div>
+
+<div class="card">
+<h2>Analytics Loading...</h2>
+</div>
+
+</div>
+
+<div id="psychology" style="display:none;">
+
+<div class="back-btn"
+onclick="show('dashboard',document.querySelectorAll('nav a')[0])">
+← Back
+</div>
+
+<div class="card">
+<h2>Psychology Engine</h2>
+<h1 id="psy">0%</h1>
+</div>
+
+</div>
+
+<div id="settings" style="display:none;">
+
+<div class="back-btn"
+onclick="show('dashboard',document.querySelectorAll('nav a')[0])">
+← Back
+</div>
+
+<div class="card">
+<h2>Settings</h2>
+<p style="color:#aaa;margin-top:10px;">
+TradeVault Matte Black + Maroon Mode Active
+</p>
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<div class="modal" id="modal">
+
+<div class="modal-content">
+
+<h2 style="margin-bottom:20px;">Add Trade</h2>
+
+<form id="f">
+
+<input id="pair"
+type="text"
+placeholder="Pair"
+required>
+
+<select id="dir">
+<option value="BUY">BUY</option>
+<option value="SELL">SELL</option>
+</select>
+
+<input id="tradePL"
+type="number"
+step="0.01"
+placeholder="Profit / Loss"
+required>
+
+<textarea id="note"
+placeholder="Trade Notes"></textarea>
+
+<button type="submit"
+style="width:100%;margin-top:10px;">
+Save Trade
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+<div class="ai-float" onclick="toggleAI()">✦</div>
+
+<div class="ai-box" id="aiBox">
+
+<h3 style="margin-bottom:15px;">TradeVault AI</h3>
+
+<div class="ai-messages" id="aiMessages">
+
+<div class="ai-message">
+AI: Market retested the 15M distribution zone.
+</div>
+
+</div>
+
+<div class="ai-input">
+<input type="text"
+id="aiInput"
+placeholder="Ask AI anything...">
+<button onclick="sendAI()">Send</button>
+</div>
+
+</div>
+
+<script>
+
+function toggleMenu(){
+
+document.getElementById("sidebar")
+.classList.toggle("active");
+
+document.getElementById("overlay")
+.classList.toggle("active");
+
+}
+
+function show(id,el){
+
+document.querySelectorAll('.main > div')
+.forEach(d=>{
+d.style.display='none';
+});
+
+document.getElementById(id)
+.style.display='block';
+
+document.querySelectorAll('nav a')
+.forEach(a=>{
+a.classList.remove('active');
+});
+
+el.classList.add('active');
+
+document.getElementById("sidebar")
+.classList.remove("active");
+
+document.getElementById("overlay")
+.classList.remove("active");
+
+}
+
+const modal=document.getElementById("modal");
+
+function openModal(){
+modal.style.display="flex";
+}
+
+window.onclick=function(e){
+
+if(e.target===modal){
+modal.style.display="none";
+}
+
+}
+
+let trades =
+JSON.parse(localStorage.getItem("t")) || [];
+
+let baseBalance =
+Number(localStorage.getItem("balance")) || 500;
+
+let chart;
+
+function changeBalance(){
+
+const value = Number(
+document.getElementById("balanceInput").value
+);
+
+if(isNaN(value)) return;
+
+baseBalance = value;
+
+localStorage.setItem("balance",baseBalance);
+
+stats();
+graph();
+
+}
+
+function updateMarket(){
+
+document.getElementById("market").innerHTML=`
+
+<div class="pair">
+<b>XAUUSD</b><br>
+<span class="up">${(3300 + Math.random()*20).toFixed(2)}</span>
+<div class="tag">LIVE GOLD</div>
+</div>
+
+<div class="pair">
+<b>BTCUSD</b><br>
+<span class="up">${(108000 + Math.random()*1000).toFixed(2)}</span>
+<div class="tag">LIVE CRYPTO</div>
+</div>
+
+<div class="pair">
+<b>ETHUSD</b><br>
+<span class="up">${(4500 + Math.random()*100).toFixed(2)}</span>
+<div class="tag">LIVE CRYPTO</div>
+</div>
+
+<div class="pair">
+<b>NAS100</b><br>
+<span class="down">${(18400 + Math.random()*100).toFixed(2)}</span>
+<div class="tag">LIVE INDEX</div>
+</div>
+
+`;
+
+}
+
+setInterval(updateMarket,3000);
+updateMarket();
+
+document.getElementById("f")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const now = new Date();
+
+const trade={
+
+pair:document.getElementById("pair").value,
+dir:document.getElementById("dir").value,
+
+pl:Number(
+document.getElementById("tradePL").value
+),
+
+note:document.getElementById("note").value,
+
+time:
+now.getHours().toString().padStart(2,'0')
++":"
++
+now.getMinutes().toString().padStart(2,'0')
+
+};
+
+trade.tag = trade.pl >= 0
+? "WIN"
+: "LOSS";
+
+trades.push(trade);
+
+localStorage.setItem("t",JSON.stringify(trades));
+
+render();
+stats();
+graph();
+aiScore();
+
+modal.style.display="none";
+
+document.getElementById("f").reset();
+
+});
+
+function aiScore(){
+
+let wins = trades.filter(t=>t.pl>0).length;
+
+let score = trades.length
+? (wins / trades.length) * 100
+: 0;
+
+document.getElementById("psy")
+.innerText = score.toFixed(1)+"%";
+
+}
+
+function stats(){
+
+let totalPL = 0;
+let streak = 0;
+let currentStreak = 0;
+
+trades.forEach(t=>{
+
+totalPL += Number(t.pl);
+
+if(t.pl > 0){
+
+currentStreak++;
+
+if(currentStreak > streak){
+streak = currentStreak;
+}
+
+}else{
+
+currentStreak = 0;
+
+}
+
+});
+
+const currentBalance =
+baseBalance + totalPL;
+
+document.getElementById("initialBalance")
+.innerText =
+"R"+baseBalance.toFixed(2);
+
+document.getElementById("balance")
+.innerText =
+"R"+currentBalance.toFixed(2);
+
+document.getElementById("pl")
+.innerText =
+(totalPL >= 0 ? "+R" : "-R")
++
+Math.abs(totalPL).toFixed(2);
+
+document.getElementById("tt")
+.innerText = trades.length;
+
+document.getElementById("streak")
+.innerText = streak + "🔥";
+
+}
+
+function render(){
+
+let html='';
+
+if(trades.length===0){
+
+html=`
+
+<div class="card">
+No journaled trades yet.
+</div>
+
+`;
+
+}
+
+trades.forEach(t=>{
+
+html += `
+
+<div class="card trade-card">
+
+<h2>${t.pair} (${t.dir})</h2>
+
+<h3 class="${t.pl >= 0 ? 'up' : 'down'}">
+${t.pl >= 0 ? '+' : '-'}
+R${Math.abs(t.pl).toFixed(2)}
+</h3>
+
+<span class="tag">${t.tag}</span>
+<span class="tag">${t.time}</span>
+
+<p style="margin-top:10px;color:#aaa;">
+${t.note}
+</p>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("list")
+.innerHTML = html;
+
+}
+
+function graph(){
+
+let equity = baseBalance;
+
+const points=[baseBalance];
+const labels=["START"];
+const times=["START"];
+
+trades.forEach((t,index)=>{
+
+equity += Number(t.pl);
+
+points.push(equity);
+
+labels.push("T"+(index+1));
+
+times.push(t.time);
+
+});
+
+if(chart){
+chart.destroy();
+}
+
+chart = new Chart(
+document.getElementById("chart"),
+{
+
+type:"line",
+
+data:{
+
+labels:labels,
+
+datasets:[{
+
+data:points,
+borderColor:"#800020",
+backgroundColor:"rgba(128,0,32,0.15)",
+fill:true,
+tension:0.35,
+pointBackgroundColor:"#800020",
+pointRadius:5,
+borderWidth:4
+
+}]
+
+},
+
+options:{
+
+responsive:true,
+maintainAspectRatio:false,
+
+plugins:{
+legend:{
+display:false
+}
+},
+
+scales:{
+
+x:{
+ticks:{
+color:"#888"
+},
+grid:{
+color:"rgba(255,255,255,0.05)"
+}
+},
+
+y:{
+ticks:{
+color:"#888"
+},
+grid:{
+color:"rgba(255,255,255,0.05)"
+}
+}
+
+}
+
+}
+
+});
+
+let timeHTML='';
+
+times.forEach(t=>{
+
+timeHTML += `
+<span>${t}</span>
+`;
+
+});
+
+document.getElementById("executionTimes")
+.innerHTML = timeHTML;
+
+}
+
+function toggleAI(){
+
+const box =
+document.getElementById("aiBox");
+
+box.style.display =
+box.style.display==="block"
+? "none"
+: "block";
+
+}
+
+function sendAI(){
+
+const input =
+document.getElementById("aiInput");
+
+const text = input.value;
+
+if(!text) return;
+
+const messages =
+document.getElementById("aiMessages");
+
+messages.innerHTML += `
+
+<div class="ai-message">
+◆ You: ${text}
+</div>
+
+`;
+
+messages.innerHTML += `
+
+<div class="ai-message">
+AI: Wait for confirmation after liquidity sweep.
+</div>
+
+`;
+
+messages.scrollTop =
+messages.scrollHeight;
+
+input.value="";
+
+}
+
+render();
+stats();
+graph();
+aiScore();
+
+</script>
+
+</body>
+</html>
