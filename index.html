@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steez Gallery</title>
+
+<!-- Gothic Font -->
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
+
+<!-- UI Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!-- Cursive Signature Font -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
+<meta name="description" content="Steez Gallery — Premium streetwear collection. Shop hoodies, tees, jackets and more.">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="favicon.ico">
+
+<style>
+
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter', -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+/* Prevent iOS/Safari from auto-zooming small text and inputs */
+html, body {
+	-webkit-text-size-adjust:100%;
+	-ms-text-size-adjust:100%;
+	text-size-adjust:100%;
+}
+
+/* Ensure form controls use at least 16px to avoid mobile zoom on focus */
+input, textarea, select, button {
+	font-size:16px;
+}
+.skip-link{
+position:absolute;
+left:-9999px;
+top:auto;
+width:1px;
+height:1px;
+overflow:hidden;
+}
+.skip-link{
+position:absolute;
+left:-9999px;
+top:auto;
+width:1px;
+height:1px;
+overflow:hidden;
+}
+.skip-link:focus{
+position:static;
+width:auto;
+height:auto;
+left:0;
+padding:12px 18px;
+background:#111;
+color:#fff;
+z-index:9999;
+border-radius:6px;
+}
+
+/* Focus outlines */
+:focus-visible{
+outline:3px solid rgba(255,255,255,0.12);
+outline-offset:3px;
+}
+
+body{
+background:#050505;
+color:white;
+overflow-x:hidden;
+}
+
+/* NAV */
+nav{
+position:fixed;
+top:0;
+width:100%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 30px;
+background:rgba(0,0,0,0.45);
+backdrop-filter:blur(18px);
+border-bottom:1px solid rgba(255,255,255,0.08);
+z-index:1000;
+}
+
+nav h1{
+font-size:22px;
+font-weight:700;
+letter-spacing:1px;
+color:white;
+font-family:'UnifrakturCook', cursive;
+}
+
+/* SEARCH */
+.search-box{
+position:relative;
+}
+
+nav input{
+padding:10px 14px;
+border-radius:14px;
+border:none;
+outline:none;
+background:rgba(255,255,255,0.06);
+backdrop-filter:blur(12px);
+color:white;
+width:230px;
+border:1px solid rgba(255,255,255,0.08);
+}
+
+nav input::placeholder{
+color:#999;
+}
+
+/* SUGGESTIONS */
+#suggestions{
+position:absolute;
+top:48px;
+left:0;
+width:100%;
+min-width:240px;
+background:rgba(12,12,12,0.95);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:16px;
+overflow:hidden;
+display:none;
+z-index:2000;
+}
+
+.suggestion-item{
+display:flex;
+align-items:center;
+gap:12px;
+padding:12px;
+cursor:pointer;
+transition:0.25s;
+}
+
+.suggestion-item:hover{
+background:rgba(255,255,255,0.06);
+}
+
+.suggestion-item img{
+width:46px;
+height:46px;
+border-radius:12px;
+object-fit:cover;
+}
+
+.suggestion-text strong{
+font-size:14px;
+}
+
+.suggestion-text span{
+font-size:12px;
+color:#aaa;
+}
+
+/* ICONS */
+.nav-icons{
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.icon{
+width:46px;
+height:46px;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+border-radius:14px;
+background:rgba(255,255,255,0.06);
+border:1px solid rgba(255,255,255,0.08);
+backdrop-filter:blur(14px);
+text-decoration:none;
+}
+
+.icon svg{
+width:22px;
+height:22px;
+stroke:white;
+fill:none;
+stroke-width:2;
+}
+
+.icon span{
+position:absolute;
+top:-5px;
+right:-5px;
+background:#ff1c1c;
+color:white;
+font-size:10px;
+width:17px;
+height:17px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+font-weight:700;
+}
+
+/* HERO */
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+position:relative;
+overflow:visible;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+inset:0;
+background: linear-gradient(rgba(0,0,0,0.72), rgba(0,0,0,0.86));
+z-index:-2;
+}
+
+.hero::after{
+content:"";
+position:absolute;
+inset:0;
+	background:rgba(0,0,0,0.45);
+	backdrop-filter:blur(6px);
+z-index:-1;
+}
+
+.hero h2{
+font-size:72px;
+font-weight:900;
+letter-spacing:3px;
+text-shadow:0 0 25px rgba(255,0,0,0.35);
+}
+
+.hero p{
+margin-top:12px;
+font-size:18px;
+color:#d1d1d1;
+}
+
+/* BUTTON */
+.hero button{
+margin-top:30px;
+padding:15px 38px;
+border:none;
+border-radius:40px;
+font-size:15px;
+font-weight:700;
+color:white;
+cursor:pointer;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,0.15);
+transition:0.3s;
+}
+
+.hero button:hover{
+transform:scale(1.05);
+background:rgba(255,255,255,0.12);
+}
+
+/* TITLE */
+.title{
+padding:110px 40px 10px;
+font-size:32px;
+font-weight:800;
+}
+
+/* PRODUCTS */
+.products{
+	display:flex;
+	flex-direction:column; /* stack products vertically */
+	overflow-y:auto; /* vertical scroll */
+	gap:18px;
+	padding:20px 40px 80px;
+	scroll-behavior:smooth;
+	max-height:60vh; /* limit height so the list scrolls within the page */
+	position:relative; /* create stacking context for grain overlay */
+	z-index:0;
+	/* catalog background image (subtle) */
+	background-image: url('https://i.postimg.cc/RZsPd7Rw/IMG-0966.jpg');
+	background-size:cover;
+	background-position:center center;
+	background-repeat:no-repeat;
+	/* dark overlay so cards remain legible */
+	background-color:rgba(5,5,5,0.48);
+	background-blend-mode:multiply;
+}
+
+.products::-webkit-scrollbar{
+	width:10px; /* vertical scrollbar width */
+}
+
+.products::-webkit-scrollbar-thumb{
+	background:rgba(255,255,255,0.12);
+	border-radius:10px;
+}
+
+/* CARD */
+.card{
+	background:#0f0f10;
+	backdrop-filter:blur(6px);
+	border:1px solid rgba(255,255,255,0.04);
+	border-radius:18px;
+	padding:18px;
+	text-align:center;
+	transition:0.18s ease;
+	cursor:pointer;
+	flex:0 0 auto;
+	width:100%;
+	max-width:720px; /* keep cards readable on wide screens */
+	margin:0 auto; /* center cards */
+	position:relative;
+	z-index:1; /* sit above the grain overlay */
+}
+
+/* subtle grain overlay for products area */
+.products::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background-image:
+      radial-gradient(rgba(255,255,255,0.034) 0.5px, transparent 0.6px),
+      linear-gradient(180deg, rgba(255,255,255,0.01), rgba(0,0,0,0.02));
+    background-size:4px 4px, 100% 100%;
+    opacity:0.9;
+    mix-blend-mode:overlay;
+    z-index:0;
+}
+
+.card:hover{
+	transform:translateY(-6px);
+}
+
+.img-box{
+	width:100%;
+	height:300px;
+	border-radius:20px;
+	overflow:hidden;
+	margin-bottom:15px;
+	background:#0b0b0b; /* matte background */
+}
+
+.img-box img{
+	width:100%;
+	height:100%;
+	object-fit:contain; /* show full image without cropping */
+	object-position:center;
+	transition:0.18s ease;
+}
+
+/* remove zoom on hover so images stay unzoomed */
+.card:hover .img-box img{
+	transform:none;
+}
+
+.card h4{
+font-size:18px;
+margin-bottom:6px;
+}
+
+.card p{
+color:#aaa;
+font-size:14px;
+}
+
+/* WHATSAPP */
+.whatsapp{
+position:fixed;
+bottom:20px;
+left:20px;
+background:#494048;
+padding:14px 22px;
+border-radius:40px;
+color:white;
+text-decoration:none;
+font-weight:700;
+z-index:999;
+}
+
+/* PRODUCT PAGE */
+#productPage{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+overflow:auto;
+background:#050505;
+z-index:2000;
+padding:100px 20px;
+text-align:center;
+}
+
+#productPage img{
+	width:340px;
+	max-width:90%;
+	height:450px;
+	object-fit:contain; /* show full product image */
+	object-position:center;
+	border-radius:24px;
+	margin-top:20px;
+}
+
+#productPage h2{
+margin-top:25px;
+font-size:34px;
+}
+
+#productPage p{
+margin-top:10px;
+color:#aaa;
+font-size:16px;
+}
+
+#productPage button{
+margin-top:20px;
+padding:14px 28px;
+border:none;
+border-radius:14px;
+font-weight:700;
+cursor:pointer;
+}
+
+.back{
+position:absolute;
+top:20px;
+left:20px;
+background:rgba(255,255,255,0.08);
+color:white;
+}
+
+.add{
+background:white;
+color:black;
+margin-left:10px;
+}
+
+/* CLUB SECTION */
+.club-section{
+padding:100px 20px;
+text-align:center;
+}
+
+.club-section h2{
+font-size:42px;
+margin-bottom:20px;
+font-weight:800;
+}
+
+.club-section p{
+max-width:700px;
+margin:auto;
+color:#aaa;
+line-height:1.8;
+font-size:16px;
+}
+
+.club-section button{
+margin-top:30px;
+padding:15px 35px;
+border:none;
+border-radius:40px;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.12);
+color:white;
+font-weight:700;
+cursor:pointer;
+transition:0.3s;
+}
+
+.club-section button:hover{
+transform:scale(1.05);
+}
+
+/* FEATURES */
+.features-section{
+padding:40px 30px 100px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.feature-box{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+backdrop-filter:blur(18px);
+border-radius:18px;
+padding:18px 14px;
+text-align:center;
+transition:0.3s;
+}
+
+.feature-box:hover{
+transform:translateY(-8px);
+}
+
+.feature-icon{
+	font-size:34px;
+	margin-bottom:12px;
+}
+
+.feature-box h3{
+font-size:16px;
+margin-bottom:8px;
+}
+
+.feature-box p{
+color:#aaa;
+line-height:1.5;
+font-size:13px;
+}
+
+/* professional SVG icons + animations for features */
+.feature-icon{
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	height:60px;
+}
+.feature-icon svg{
+    width:40px;
+    height:40px;
+	display:block;
+	margin:0 auto 6px;
+	stroke:currentColor;
+	color:#fff;
+	fill:none;
+	stroke-width:1.2;
+	transition:transform 220ms ease, filter 220ms ease;
+	will-change:transform;
+	opacity:0;
+	transform:translateY(8px);
+	animation:iconIntro 640ms ease forwards;
+}
+.feature-icon svg path{stroke-dasharray:240;stroke-dashoffset:240;animation:draw 900ms ease forwards;}
+.feature-box:hover .feature-icon svg{transform:translateY(-8px) scale(1.06);filter:drop-shadow(0 6px 14px rgba(0,0,0,0.45));}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes iconIntro{to{opacity:1;transform:translateY(0)}}
+
+
+/* REVIEWS */
+.reviews-section{
+padding:100px 20px;
+overflow:hidden;
+}
+
+.reviews-section h2{
+text-align:center;
+font-size:38px;
+margin-bottom:40px;
+font-weight:800;
+}
+
+.reviews-slider{
+display:flex;
+gap:20px;
+overflow-x:auto;
+scroll-behavior:smooth;
+padding-bottom:10px;
+}
+
+.reviews-slider::-webkit-scrollbar{
+height:8px;
+}
+
+.reviews-slider::-webkit-scrollbar-thumb{
+background:rgba(255,255,255,0.2);
+border-radius:10px;
+}
+
+.review-card{
+min-width:280px;
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+backdrop-filter:blur(18px);
+border-radius:18px;
+padding:16px;
+flex-shrink:0;
+}
+
+.review-top{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:18px;
+}
+
+.avatar{
+width:55px;
+height:55px;
+border-radius:50%;
+background:#0b0b0b; /* matt black */
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:800;
+font-size:18px;
+color:#ddd;
+border:1px solid rgba(255,255,255,0.04);
+box-shadow:inset 0 -2px 6px rgba(0,0,0,0.6);
+}
+
+.review-card h4{
+font-size:16px;
+margin-bottom:4px;
+}
+
+.review-card span{
+color:gold;
+font-size:14px;
+}
+
+/* animated review entry */
+.review-card{opacity:0;transform:translateY(18px) scale(0.995);transition:transform 480ms cubic-bezier(.2,.9,.25,1),opacity 420ms ease}
+.review-card.anim-in{opacity:1;transform:none}
+.review-card:hover{transform:translateY(-6px) scale(1.02)}
+
+@media (prefers-reduced-motion: reduce){
+	.review-card, .feature-icon svg{animation:none !important;transition:none !important}
+}
+
+.review-card p{
+color:#bbb;
+line-height:1.6;
+font-size:13px;
+}
+
+/* FOOTER */
+footer{
+background:#050505;
+border-top:1px solid rgba(255,255,255,0.08);
+padding:40px 20px 20px;
+text-align:center;
+}
+
+.footer-links{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin:18px 0;
+}
+
+.footer-links a{
+color:white;
+text-decoration:none;
+font-size:13px;
+}
+
+.footer-bottom{
+color:#666;
+font-size:12px;
+margin-top:20px;
+}
+
+/* MOBILE */
+@media(max-width:768px){
+
+.hero h2{
+font-size:42px;
+}
+
+nav{
+padding:15px;
+}
+
+nav input{
+width:150px;
+}
+
+.products{
+padding:20px;
+/* on small screens allow the product list to flow naturally (avoid inner scroll) */
+max-height:none;
+overflow-y:visible;
+}
+
+.title{
+padding:100px 20px 10px;
+}
+
+/* make features slide horizontally on touch devices */
+.features-section{
+	display:flex;
+	gap:14px;
+	overflow-x:auto;
+	padding:18px 14px 40px;
+	scroll-snap-type:x mandatory;
+	-webkit-overflow-scrolling:touch;
+}
+.features-section .feature-box{
+	min-width:240px;
+	flex:0 0 auto;
+	scroll-snap-align:center;
+}
+.features-section::-webkit-scrollbar{height:8px}
+.features-section::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);border-radius:10px}
+
+}
+
+</style>
+
+<!-- Signature styles -->
+<style>
+/* signature overlay */
+#signatureOverlay{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:3500;pointer-events:none}
+/* make the box background transparent so overlay text stands out */
+#signatureOverlay .box{background:transparent;padding:0;border-radius:12px;backdrop-filter:none;pointer-events:auto}
+.signature{font-family:'Segoe UI Symbol', 'Dancing Script', cursive;font-weight:700;font-size:64px;color:#fff;letter-spacing:1px;display:inline-block;white-space:pre;font-style:normal;text-align:center;-webkit-font-smoothing:antialiased}
+.signature span{display:inline-block;opacity:0;transform:translateY(10px) rotate(-6deg);transition:transform 200ms cubic-bezier(.2,.9,.25,1), opacity 200ms ease;}
+.signature.show span{opacity:1;transform:none}
+.signature .dot{display:inline-block;margin-left:6px;opacity:0;transform:translateY(0) scale(0.6);font-size:1.12em;transition:none}
+.signature .dot.show{opacity:1;transform:translateY(0) scale(1);animation:dotType 160ms ease forwards}
+@keyframes dotType{0%{opacity:0;transform:translateY(-4px) scale(0.6)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.pen{width:14px;height:14px;border-radius:50%;background:#fff;position:fixed;transform:translate(-50%,-50%);transition:left 180ms ease, top 180ms ease, opacity 180ms ease;z-index:3600;box-shadow:0 2px 6px rgba(0,0,0,0.4)}
+.signature-hide{opacity:0;transition:opacity 300ms ease}
+
+/* signature flicker — subtle electronic glitch/flicker when showing */
+@keyframes sigFlicker{
+ 0%{opacity:1;color:#fff;filter:brightness(1);text-shadow:none;transform:translateY(0)}
+ 8%{opacity:0.18;color:#ff1c1c;filter:brightness(0.6) hue-rotate(-8deg) saturate(0.7);text-shadow:0 0 20px rgba(255,28,28,0.25);transform:translateY(-1px) scale(0.995)}
+ 12%{opacity:1;color:#fff;filter:brightness(1);text-shadow:none}
+ 28%{opacity:0.55;color:#ff1c1c;filter:brightness(0.8);text-shadow:0 0 16px rgba(255,28,28,0.20);transform:translateY(0) scale(0.995)}
+ 45%{opacity:1;color:#fff;filter:brightness(1);text-shadow:none}
+ 60%{opacity:0.7;color:#ff1c1c;filter:brightness(0.9) contrast(0.95);text-shadow:0 0 12px rgba(255,28,28,0.16)}
+ 100%{opacity:1;color:#fff;filter:brightness(1);text-shadow:none;transform:translateY(0) scale(1)}
+}
+.signature.flicker{animation:sigFlicker 1000ms linear 0s 2 both}
+
+/* hero background fills the hero area (cover) */
+#heroBg{
+	position:absolute;
+	left:50%;
+	top:50%;
+	transform:translate(-50%,-50%);
+	/* ensure the image covers the hero while keeping center focal point */
+	min-width:100%;
+	min-height:100%;
+	width:auto;
+	height:auto;
+	object-fit:cover;
+	object-position:center center;
+	z-index:-3;
+	pointer-events:none;
+}
+
+/* when signature overlay active, blur the hero title, subtitle and call-to-action */
+body.signature-active .hero h2{filter:blur(6px);opacity:0.35;transition:filter 320ms ease, opacity 320ms ease}
+body.signature-active .hero p, body.signature-active .hero button{filter:blur(4px);opacity:0.45;transition:filter 320ms ease, opacity 320ms ease;pointer-events:none}
+
+/* (shopping-bag emoji removed) */
+
+/* vacuum animation for hero title letters */
+.hero h2 span{display:inline-block;will-change:transform,opacity;transition:transform 520ms cubic-bezier(.2,.9,.25,1), opacity 420ms ease}
+@keyframes vacuumIn{
+ 0%{opacity:1;transform:translateY(0) scale(1) rotate(0deg)}
+ 100%{opacity:0;transform:translateY(-80px) scale(0.04) rotate(20deg)}
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#shop">Skip to content</a>
+
+<nav role="navigation" aria-label="Main navigation">
+
+<div class="search-box">
+
+<input type="text" id="search" placeholder="Search streetwear..." aria-label="Search streetwear" autocomplete="off">
+
+<div id="suggestions"></div>
+
+</div>
+
+<h1>Steez Gallery</h1>
+
+<div class="nav-icons">
+
+<a href="wishlist.html" class="icon" aria-label="Wishlist" title="Wishlist">
+
+<svg viewBox="0 0 24 24">
+<path d="M12 21s-7-5-10-9C0 8 3 5 6 5c2 0 3.5 1 6 3 2.5-2 4-3 6-3 3 0 6 3 4 7-2 4-10 9-10 9z"></path>
+</svg>
+
+<span id="wishlistCount" aria-live="polite">0</span>
+
+</a>
+
+<a href="cart.html" class="icon" aria-label="Cart" title="Cart">
+
+<svg viewBox="0 0 24 24">
+<path d="M7 8h10l1 13H6l1-13z"></path>
+<path d="M9 8a3 3 0 0 1 6 0"></path>
+</svg>
+
+<span id="cartCount" aria-live="polite">0</span>
+
+</a>
+
+</div>
+
+<!-- Admin: Add product button -->
+<button id="addProductBtn" aria-label="Add product" title="Add product" style="margin-left:12px;border:none;background:rgba(255,255,255,0.06);color:white;padding:8px 12px;border-radius:10px;cursor:pointer;">＋ Add Product</button>
+
+</nav>
+
+<div class="hero">
+	<!-- actual image placed so original dimensions are preserved (not cropped) -->
+	<img id="heroBg" src="https://i.postimg.cc/WpB2jQMF/IMG-0177.jpg" alt="" aria-hidden="true" onerror="this.onerror=null;this.src='https://via.placeholder.com/1600x900?text=Steez+Gallery'">
+
+<h2>STEEZ GALLERY</h2>
+
+<p>Premium Streetwear Collection</p>
+
+<button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">
+Shop Collection
+</button>
+
+</div>
+
+<h2 class="title">Featured Collection</h2>
+
+<div class="products" id="shop"></div>
+
+<!-- CLUB -->
+<div class="club-section">
+
+<h2>Join Steez Club</h2>
+
+<p>
+Become part of the Steez community for exclusive drops,
+early access, member discounts and premium streetwear updates.
+</p>
+
+<button id="joinClubBtn" onclick="showJoinClub()">Join Now</button>
+
+</div>
+
+<!-- FEATURES -->
+<div class="features-section">
+
+<div class="feature-box">
+<div class="feature-icon" aria-hidden="true">
+	<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" role="img">
+		<path d="M3 7h11v6H3z" stroke-linecap="round" stroke-linejoin="round"></path>
+		<path d="M14 10h4l3 3v1" stroke-linecap="round" stroke-linejoin="round"></path>
+		<circle cx="7" cy="16" r="1.6"></circle>
+		<circle cx="18" cy="16" r="1.6"></circle>
+	</svg>
+</div>
+<h3>Fast Delivery</h3>
+<p>Nationwide shipping across South Africa.</p>
+</div>
+
+<div class="feature-box">
+<div class="feature-box">
+	<div class="feature-icon" aria-hidden="true">
+		<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" role="img">
+			<path d="M12 2l7 4v5c0 5-3.2 9.6-7 11-3.8-1.4-7-6-7-11V6z" stroke-linecap="round" stroke-linejoin="round"></path>
+		</svg>
+	</div>
+	<h3>Safe Payments</h3>
+	<p>Secure checkout and trusted ordering process.</p>
+</div>
+</div>
+
+<div class="feature-box">
+	<div class="feature-icon" aria-hidden="true">
+		<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" role="img">
+			<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"></path>
+		</svg>
+	</div>
+	<h3>24/7 Support</h3>
+	<p>We are always available for customer support.</p>
+</div>
+
+</div>
+
+<!-- REVIEWS -->
+<div class="reviews-section">
+
+<h2>Customer Reviews</h2>
+
+<div class="reviews-slider">
+
+<div class="review-card">
+
+<div class="review-top">
+
+<div class="avatar">NK</div>
+
+<div>
+<h4>Nkosi Khumalo</h4>
+<span>★★★★★</span>
+</div>
+
+
+<!-- Join Club Modal -->
+<div id="joinClubModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:3200;align-items:center;justify-content:center;">
+	<div style="background:#0b0b0b;padding:18px;border-radius:12px;max-width:420px;width:92%;margin:auto;color:#fff;">
+		<h3 style="margin-bottom:10px;">Join Steez Club</h3>
+		<form id="joinClubForm">
+			<div style="display:flex;gap:8px;">
+				<input id="club-email" type="email" placeholder="Your email" required style="flex:1;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#fff;">
+				<button type="submit" style="padding:10px 12px;border-radius:8px;background:#fff;color:#000;border:none;font-weight:700;">Join</button>
+			</div>
+			<div style="text-align:right;margin-top:8px;">
+				<button type="button" onclick="hideJoinClubModal()" style="padding:8px 10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.08);color:#fff;">Cancel</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+</div>
+
+<p>
+"Best streetwear quality I've bought online. The fit is insane and delivery was quick."
+</p>
+
+</div>
+
+<div class="review-card">
+
+<div class="review-top">
+
+<div class="avatar">TM</div>
+
+<div>
+<h4>Thando M</h4>
+<span>★★★★★</span>
+</div>
+
+</div>
+
+<p>
+"Steez Gallery has premium quality. The hoodie feels luxury."
+</p>
+
+</div>
+
+<div class="review-card">
+
+<div class="review-top">
+
+<div class="avatar">LS</div>
+
+<div>
+<h4>Lebo Sithole</h4>
+<span>★★★★★</span>
+</div>
+
+</div>
+
+<p>
+"Definitely ordering again. Packaging and quality exceeded expectations."
+</p>
+
+</div>
+
+<div class="review-card">
+
+<div class="review-top">
+
+<div class="avatar">AM</div>
+
+<div>
+<h4>Amanda M</h4>
+<span>★★★★★</span>
+</div>
+
+</div>
+
+<p>
+"The varsity jacket is fire 🔥 premium feel and clean fit."
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<a class="whatsapp" href="https://wa.me/27706418906" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Order" title="WhatsApp Order">
+WhatsApp Order
+</a>
+
+<!-- PRODUCT PAGE -->
+<div id="productPage">
+
+<button class="back" onclick="closeProduct()">Back</button>
+
+<img id="pImg" alt="" loading="lazy">
+
+<h2 id="pName"></h2>
+
+<p id="pPrice"></p>
+
+
+<p id="pSpecs"></p>
+
+<!-- Size & Color selectors -->
+<div style="margin-top:18px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;align-items:center;">
+	<div id="sizeSection" style="text-align:center;">
+		<div style="font-size:14px;margin-bottom:6px;font-weight:700;color:#ddd;">Size</div>
+		<div id="sizeOptions" role="radiogroup" aria-label="Size options" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"></div>
+		<button onclick="openSizeGuide()" style="margin-top:8px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer">Size Guide</button>
+	</div>
+
+	<div id="colorSection" style="text-align:center;">
+		<div style="font-size:14px;margin-bottom:6px;font-weight:700;color:#ddd;">Color</div>
+		<div id="colorOptions" role="radiogroup" aria-label="Color options" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"></div>
+		<button onclick="openColorGuide()" style="margin-top:8px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:#fff;padding:6px 10px;border-radius:8px;cursor:pointer">Color Guide</button>
+	</div>
+
+</div>
+
+<button class="add" onclick="addFromPage()" aria-label="Add product to cart">Add to Cart</button>
+
+<button class="add" onclick="addToWishlistFromPage()" aria-label="Add product to wishlist">Wishlist</button>
+
+</div>
+
+<!-- Add Product Modal -->
+<div id="addProductModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:3000;align-items:center;justify-content:center;">
+	<div style="background:#0b0b0b;padding:22px;border-radius:14px;max-width:520px;width:92%;margin:auto;color:#fff;">
+		<h3 style="margin-bottom:12px;">Add Product</h3>
+		<form id="addProductForm">
+			<div style="display:flex;flex-direction:column;gap:8px;">
+				<input id="ap-name" placeholder="Product name" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#fff;">
+				<input id="ap-price" placeholder="Price (numbers only)" required type="number" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#fff;">
+				<input id="ap-img" placeholder="Image URL" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#fff;">
+				<input id="ap-specs" placeholder="Short specs" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#fff;">
+					<input id="ap-sizes" placeholder="Sizes (comma-separated) e.g. S,M,L" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#fff;">
+					<input id="ap-colors" placeholder="Colors (comma-separated) e.g. Black,#ffffff,Red" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#fff;">
+			</div>
+			<div style="margin-top:12px;display:flex;gap:8px;justify-content:flex-end;">
+				<button type="button" onclick="hideAddProductModal()" style="padding:10px 14px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.08);color:#fff;">Cancel</button>
+				<button type="submit" style="padding:10px 14px;border-radius:8px;background:#fff;color:#000;border:none;font-weight:700;">Add</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script>
+
+// Load saved products from localStorage so manually added items persist
+let products = [];
+// default fallback catalog so devices/browsers with restricted localStorage still show items
+const defaultProducts = [
+	{ name: 'STEEZ Hoodie', price: 899, img: 'https://via.placeholder.com/800x600?text=STEEZ+Hoodie', specs: 'Premium cotton hoodie', sizes: ['S','M','L','XL'], colors: ['#000','#fff'] },
+	{ name: 'STEEZ Tee', price: 349, img: 'https://via.placeholder.com/800x600?text=STEEZ+Tee', specs: 'Classic fit tee', sizes: ['S','M','L'], colors: ['Black','White'] }
+];
+try{
+	const raw = localStorage.getItem('products');
+	if(raw){
+		const saved = JSON.parse(raw);
+		if(Array.isArray(saved) && saved.length) products = saved;
+	}
+}catch(e){
+	products = [];
+}
+
+if(!products || !products.length){
+	// use defaults and attempt to persist, but ignore failures (e.g., Safari private mode)
+	products = defaultProducts.slice();
+	try{ localStorage.setItem('products', JSON.stringify(products)); }catch(e){}
+}
+
+let cart = [];
+try{ cart = JSON.parse(localStorage.getItem("cart")) || []; }catch(e){ cart = []; }
+
+let wishlist = [];
+try{ wishlist = JSON.parse(localStorage.getItem("wishlist")) || []; }catch(e){ wishlist = []; }
+
+let selectedProduct = null;
+
+// Ensure products have all expected fields and sensible fallbacks
+function normalizeProducts(arr){
+	return arr.map(p=>{
+		const item = p || {};
+		const sizes = Array.isArray(item.sizes) ? item.sizes : (item.sizes ? String(item.sizes).split(',').map(s=>s.trim()).filter(Boolean) : []);
+		const colors = Array.isArray(item.colors) ? item.colors : (item.colors ? String(item.colors).split(',').map(c=>c.trim()).filter(Boolean) : []);
+		return {
+			name: item.name || 'Untitled Product',
+			price: (typeof item.price === 'number') ? item.price : (Number(item.price) || 0),
+			img: item.img || 'https://via.placeholder.com/800x600?text=Product',
+			specs: item.specs || '',
+			sizes,
+			colors
+		};
+	});
+}
+
+// normalize current products and attempt to persist normalized data
+try{
+	products = normalizeProducts(products);
+	try{ localStorage.setItem('products', JSON.stringify(products)); }catch(e){}
+}catch(e){ /* ignore normalization errors */ }
+
+// If nothing rendered yet (defensive), ensure we have defaults
+if(!products || !products.length){
+	products = normalizeProducts(defaultProducts.slice());
+	try{ localStorage.setItem('products', JSON.stringify(products)); }catch(e){}
+}
+
+// generate SVG placeholder data-URI when external images fail
+function escapeHtml(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function fallbackToSVG(img){
+	try{
+		if(img.dataset.fallbackSet) return;
+		img.dataset.fallbackSet = '1';
+		const name = escapeHtml(img.alt || 'Product');
+		const w = img.width || 800;
+		const h = img.height || 600;
+		const bg = '#111';
+		const fg = '#fff';
+		const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}' viewBox='0 0 ${w} ${h}'><rect width='100%' height='100%' fill='${bg}'/><text x='50%' y='50%' font-family='Inter, Arial, sans-serif' font-size='28' fill='${fg}' dominant-baseline='middle' text-anchor='middle'>${name}</text></svg>`;
+		img.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+	}catch(e){
+		try{ img.src = 'https://via.placeholder.com/800x600?text=Product'; }catch(_){}
+	}
+}
+
+function render(){
+
+let html = "";
+
+products.forEach((p,i)=>{
+
+html += `
+
+<div class="card" role="button" tabindex="0" onclick="openProduct(${i})" onkeydown="if(event.key==='Enter'||event.key===' ') openProduct(${i})">
+
+<div class="img-box">
+
+<img src="${p.img}" alt="${p.name}" loading="lazy" onerror="fallbackToSVG(this)">
+
+</div>
+
+<h4>${p.name}</h4>
+
+<p>R${p.price}</p>
+
+</div>
+
+`;
+
+
+});
+
+document.getElementById("shop").innerHTML = html;
+
+}
+
+function openProduct(i){
+
+selectedProduct = products[i];
+
+document.getElementById("productPage").style.display = "block";
+
+document.getElementById("pImg").src = selectedProduct.img || '';
+document.getElementById("pImg").alt = selectedProduct.name || '';
+// ensure product page image has a fallback if the source fails to load
+try{ document.getElementById("pImg").onerror = function(){ fallbackToSVG(this); }; }catch(e){}
+
+document.getElementById("pName").innerText = selectedProduct.name || '';
+
+document.getElementById("pPrice").innerText = "R" + (selectedProduct.price || 0);
+
+document.getElementById("pSpecs").innerText = selectedProduct.specs || '';
+
+// Populate size options
+const sizeOptions = document.getElementById('sizeOptions');
+sizeOptions.innerHTML = '';
+const sizes = Array.isArray(selectedProduct.sizes) ? selectedProduct.sizes : (selectedProduct.sizes ? String(selectedProduct.sizes).split(',').map(s=>s.trim()).filter(Boolean) : []);
+if(sizes.length){
+	sizes.forEach((s, idx)=>{
+		const id = 'size_' + idx;
+		const label = document.createElement('label');
+		label.style.cursor = 'pointer';
+		label.style.border = '1px solid rgba(255,255,255,0.08)';
+		label.style.padding = '6px 10px';
+		label.style.borderRadius = '8px';
+		label.style.margin = '2px';
+		label.style.background = idx===0 ? 'rgba(255,255,255,0.06)' : 'transparent';
+		const input = document.createElement('input');
+		input.type = 'radio';
+		input.name = 'size';
+		input.value = s;
+		input.id = id;
+		input.style.display = 'none';
+		if(idx===0) input.checked = true;
+		input.addEventListener('change', ()=>{
+			Array.from(sizeOptions.querySelectorAll('label')).forEach(l=>l.style.background='transparent');
+			label.style.background='rgba(255,255,255,0.06)';
+		});
+		label.appendChild(input);
+		const span = document.createElement('span');
+		span.innerText = s;
+		label.appendChild(span);
+		sizeOptions.appendChild(label);
+	});
+} else {
+	sizeOptions.innerHTML = '<div style="color:#aaa">No size information</div>';
+}
+
+// Populate color options
+const colorOptions = document.getElementById('colorOptions');
+colorOptions.innerHTML = '';
+const colors = Array.isArray(selectedProduct.colors) ? selectedProduct.colors : (selectedProduct.colors ? String(selectedProduct.colors).split(',').map(c=>c.trim()).filter(Boolean) : []);
+if(colors.length){
+	colors.forEach((c, idx)=>{
+		const id = 'color_' + idx;
+		const label = document.createElement('label');
+		label.style.cursor = 'pointer';
+		label.style.display = 'inline-flex';
+		label.style.alignItems = 'center';
+		label.style.justifyContent = 'center';
+		label.style.width = '36px';
+		label.style.height = '36px';
+		label.style.borderRadius = '8px';
+		label.style.border = '1px solid rgba(255,255,255,0.08)';
+		label.style.overflow = 'hidden';
+		label.style.position = 'relative';
+		if(idx===0) label.style.outline = '2px solid rgba(255,255,255,0.12)';
+		const input = document.createElement('input');
+		input.type = 'radio';
+		input.name = 'color';
+		input.value = c;
+		input.id = id;
+		input.style.display = 'none';
+		if(idx===0) input.checked = true;
+		input.addEventListener('change', ()=>{
+			Array.from(colorOptions.querySelectorAll('label')).forEach(l=>l.style.outline='none');
+			label.style.outline='2px solid rgba(255,255,255,0.12)';
+		});
+		const swatch = document.createElement('span');
+		swatch.style.width = '100%';
+		swatch.style.height = '100%';
+		swatch.style.display = 'block';
+		// Try to use provided color value as background; fallback to text
+		swatch.style.background = c;
+		swatch.title = c;
+		label.appendChild(input);
+		label.appendChild(swatch);
+		colorOptions.appendChild(label);
+	});
+} else {
+	colorOptions.innerHTML = '<div style="color:#aaa">No color information</div>';
+}
+
+}
+
+function closeProduct(){
+
+document.getElementById("productPage").style.display = "none";
+
+}
+
+function addFromPage(){
+// Read selected size & color
+const selectedSize = (document.querySelector('input[name="size"]:checked') || {}).value || null;
+const selectedColor = (document.querySelector('input[name="color"]:checked') || {}).value || null;
+
+const item = Object.assign({}, selectedProduct, { selectedSize, selectedColor });
+cart.push(item);
+
+localStorage.setItem("cart", JSON.stringify(cart));
+
+document.getElementById("cartCount").innerText = cart.length;
+
+}
+
+function addToWishlistFromPage(){
+
+const selectedSize = (document.querySelector('input[name="size"]:checked') || {}).value || null;
+const selectedColor = (document.querySelector('input[name="color"]:checked') || {}).value || null;
+
+const item = Object.assign({}, selectedProduct, { selectedSize, selectedColor });
+wishlist.push(item);
+
+localStorage.setItem("wishlist", JSON.stringify(wishlist));
+
+document.getElementById("wishlistCount").innerText = wishlist.length;
+
+}
+
+document.getElementById("cartCount").innerText = cart.length;
+
+document.getElementById("wishlistCount").innerText = wishlist.length;
+
+// Add product modal handlers
+function showAddProductModal(){
+	const m = document.getElementById('addProductModal');
+	if(!m) return;
+	m.style.display = 'flex';
+	const nameField = document.getElementById('ap-name');
+	if(nameField) nameField.focus();
+}
+
+function hideAddProductModal(){
+	const m = document.getElementById('addProductModal');
+	if(!m) return;
+	m.style.display = 'none';
+	const form = document.getElementById('addProductForm');
+	if(form) form.reset();
+}
+
+const addBtn = document.getElementById('addProductBtn');
+if(addBtn) addBtn.addEventListener('click', showAddProductModal);
+
+const addForm = document.getElementById('addProductForm');
+if(addForm){
+	addForm.addEventListener('submit', function(e){
+		e.preventDefault();
+		const name = document.getElementById('ap-name').value.trim();
+		const price = Number(document.getElementById('ap-price').value) || 0;
+		const img = document.getElementById('ap-img').value.trim() || 'https://via.placeholder.com/800x600?text=Product';
+		const specs = document.getElementById('ap-specs').value.trim() || '';
+		const sizesRaw = document.getElementById('ap-sizes') ? document.getElementById('ap-sizes').value.trim() : '';
+		const colorsRaw = document.getElementById('ap-colors') ? document.getElementById('ap-colors').value.trim() : '';
+		const sizes = sizesRaw ? sizesRaw.split(',').map(s=>s.trim()).filter(Boolean) : [];
+		const colors = colorsRaw ? colorsRaw.split(',').map(c=>c.trim()).filter(Boolean) : [];
+		if(!name || !price){
+			alert('Please enter a valid name and price.');
+			return;
+		}
+		const newProduct = { name, price, img, specs, sizes, colors };
+		products.unshift(newProduct);
+		localStorage.setItem('products', JSON.stringify(products));
+		render();
+		hideAddProductModal();
+	});
+}
+
+// (clear-catalog removed)
+
+// Join Club modal handlers
+function showJoinClub(){
+	const m = document.getElementById('joinClubModal');
+	if(!m) return;
+	m.style.display = 'flex';
+	const e = document.getElementById('club-email'); if(e) e.focus();
+}
+
+function hideJoinClubModal(){
+	const m = document.getElementById('joinClubModal'); if(!m) return; m.style.display = 'none';
+	const form = document.getElementById('joinClubForm'); if(form) form.reset();
+}
+
+const joinForm = document.getElementById('joinClubForm');
+if(joinForm){
+	joinForm.addEventListener('submit', function(ev){
+		ev.preventDefault();
+		const email = (document.getElementById('club-email')||{}).value || '';
+		if(!email) return alert('Please enter an email');
+		try{ localStorage.setItem('steez_club_email', email); }catch(e){}
+		// redirect to a simple club page with email as query param
+		hideJoinClubModal();
+		window.location.href = 'club.html?email=' + encodeURIComponent(email);
+	});
+}
+
+const searchInput = document.getElementById("search");
+
+const suggestions = document.getElementById("suggestions");
+
+function hideSuggestions(){
+
+suggestions.style.display = "none";
+
+suggestions.innerHTML = "";
+
+}
+
+searchInput.addEventListener("input", function(e){
+
+const value = e.target.value.trim().toLowerCase();
+
+if(!value){
+
+hideSuggestions();
+
+return;
+
+}
+
+const matches = products.filter(p =>
+p.name.toLowerCase().includes(value)
+).slice(0,5);
+
+suggestions.innerHTML = matches.map(p => `
+
+<div class="suggestion-item" role="button" tabindex="0" onclick="openSuggestion('${p.name}')" onkeydown="if(event.key==='Enter'||event.key===' ') openSuggestion('${p.name}')">
+
+<img src="${p.img}" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='https://via.placeholder.com/100x100?text=Product'">
+
+<div class="suggestion-text">
+
+<strong>${p.name}</strong>
+
+<span>R${p.price}</span>
+
+</div>
+
+</div>
+
+`).join("");
+
+suggestions.style.display = "block";
+
+});
+
+function openSuggestion(name){
+
+const found = products.find(p => p.name === name);
+
+if(found){
+
+openProduct(products.indexOf(found));
+
+}
+
+hideSuggestions();
+
+searchInput.value = "";
+
+}
+
+document.addEventListener("click", function(e){
+
+if(!e.target.closest(".search-box")){
+
+hideSuggestions();
+
+}
+
+});
+
+// Size & Color guide modals
+function openSizeGuide(){
+	const html = `\
+	<div style="padding:18px;color:#fff;max-width:540px;margin:auto;text-align:left;">\
+		<h3 style="margin-top:0;">Size Guide</h3>\
+		<p style="color:#ccc;">Refer to our standard sizing: \nS — Chest 34-36in; M — 38-40in; L — 42-44in; XL — 46-48in.</p>\
+		<div style="text-align:right;margin-top:12px;">\
+			<button onclick=\"closeOverlay()\" style=\"padding:8px 12px;border-radius:8px;background:#fff;color:#000;border:none;cursor:pointer\">Close</button>\
+		</div>\
+	</div>`;
+	showOverlay(html);
+}
+
+function openColorGuide(){
+	const html = `\
+	<div style="padding:18px;color:#fff;max-width:540px;margin:auto;text-align:left;">\
+		<h3 style="margin-top:0;">Color Guide</h3>\
+		<p style="color:#ccc;">Colors may vary slightly due to screen settings. Where hex codes are provided, they represent the closest match.</p>\
+		<div style="text-align:right;margin-top:12px;">\
+			<button onclick=\"closeOverlay()\" style=\"padding:8px 12px;border-radius:8px;background:#fff;color:#000;border:none;cursor:pointer\">Close</button>\
+		</div>\
+	</div>`;
+	showOverlay(html);
+}
+
+function showOverlay(inner){
+	let o = document.getElementById('simpleOverlay');
+	if(!o){
+		o = document.createElement('div');
+		o.id = 'simpleOverlay';
+		o.style.position = 'fixed';
+		o.style.inset = '0';
+		o.style.background = 'rgba(0,0,0,0.6)';
+		o.style.display = 'flex';
+		o.style.alignItems = 'center';
+		o.style.justifyContent = 'center';
+		o.style.zIndex = 4000;
+		document.body.appendChild(o);
+	}
+	o.innerHTML = `<div style=\"padding:18px;border-radius:12px;\">${inner}</div>`;
+}
+
+function closeOverlay(){
+	const o = document.getElementById('simpleOverlay');
+	if(o) o.remove();
+}
+
+// Signature animation (runs on page load)
+function showSignature(){
+	const text = '𝓢.𝓰𝓪𝓵𝓵𝓮𝓻𝔂..';
+	const overlay = document.createElement('div');
+	overlay.id = 'signatureOverlay';
+	const box = document.createElement('div');
+	box.className = 'box';
+	// nudge box slightly up for better placement
+	box.style.transform = 'translateY(-40px)';
+	const sig = document.createElement('div');
+	sig.className = 'signature';
+	// add a brief flicker/glitch when the signature appears
+	sig.classList.add('flicker');
+	// create spans for each char
+	Array.from(text).forEach((ch, i)=>{
+		const sp = document.createElement('span');
+		sp.textContent = ch;
+		sp.style.setProperty('--i', i);
+		sig.appendChild(sp);
+	});
+	box.appendChild(sig);
+	overlay.appendChild(box);
+	const pen = document.createElement('div');
+	pen.id = 'signaturePen';
+	pen.className = 'pen';
+
+	// show overlay and apply page blur
+	document.body.appendChild(overlay);
+	document.body.appendChild(pen);
+	document.body.classList.add('signature-active');
+	// allow click to skip
+	overlay.addEventListener('click', ()=>{ removeSignature(); });
+
+	// reveal letters sequentially and move pen
+	const spans = Array.from(sig.querySelectorAll('span'));
+	// timing tweaks: shorter start, slightly faster per-char
+	const startDelay = 300;
+	const charDelay = 100;
+	spans.forEach((sp, idx)=>{
+		const delay = startDelay + idx * charDelay;
+		setTimeout(()=>{
+			sp.classList.add('appear');
+			if(idx===0) sig.classList.add('show');
+			const r = sp.getBoundingClientRect();
+			// move pen with a small vertical offset so it sits near baseline
+			pen.style.left = (r.left + r.width/2) + 'px';
+			pen.style.top = (r.top + r.height*0.6) + 'px';
+		}, delay);
+	});
+
+	// after animation complete, fade out slightly later
+	const total = startDelay + spans.length * charDelay + 700;
+	setTimeout(()=>{
+		overlay.classList.add('signature-hide');
+		pen.style.opacity = '0';
+		setTimeout(()=>{ removeSignature(); }, 450);
+	}, total);
+
+	function removeSignature(){
+		// stop flicker then remove overlay and pen
+		try{ if(sig && sig.classList) sig.classList.remove('flicker'); }catch(e){}
+		if(overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+		if(pen && pen.parentNode) pen.parentNode.removeChild(pen);
+		document.body.classList.remove('signature-active');
+		// scatter letters, then vacuum back shortly after signature is removed
+		setTimeout(()=>{ try{ window.scatterHero && window.scatterHero(); }catch(e){} }, 140);
+	}
+}
+
+// run on load (so appears on refresh)
+window.addEventListener('load', function(){
+	try{ showSignature(); }catch(e){/* ignore */}
+});
+
+render();
+
+// vacuumHero: animate hero title letters as if being "vacuumed" upwards;
+// also trigger vibration on devices that support it
+function vacuumHero(){
+	// Vacuum animation removed per request — keep function for compatibility
+	return;
+}
+
+// animate review cards on load with a stagger
+function animateReviews(){
+	if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+	const cards = Array.from(document.querySelectorAll('.review-card'));
+	cards.forEach((card, i) => {
+		setTimeout(()=> card.classList.add('anim-in'), i * 110);
+	});
+}
+
+window.addEventListener('load', function(){
+	try{ animateReviews(); }catch(e){}
+});
+
+// scatter letters across the hero, then trigger the vacuum pull
+function scatterHero(){
+	const hero = document.querySelector('.hero');
+	const h2 = hero && hero.querySelector('h2');
+	if(!h2) return;
+	const text = h2.textContent || '';
+	if(!text.trim()) return;
+
+	// wrap into spans if not already
+	if(!h2.querySelector('span')){
+		const chars = Array.from(text);
+		h2.innerHTML = '';
+		chars.forEach(ch=>{
+			const sp = document.createElement('span');
+			sp.textContent = ch;
+			sp.style.display = 'inline-block';
+			sp.style.willChange = 'transform,opacity';
+			// leave transition as CSS default
+			h2.appendChild(sp);
+		});
+	}
+
+	const spans = Array.from(h2.querySelectorAll('span'));
+	const heroRect = hero.getBoundingClientRect();
+
+	// scatter range (relative to hero size)
+	const maxX = Math.max(120, Math.round(heroRect.width * 0.48));
+	const maxY = Math.max(80, Math.round(heroRect.height * 0.42));
+
+	spans.forEach((sp)=>{
+		const dx = Math.round((Math.random()*2 - 1) * maxX);
+		const dy = Math.round((Math.random()*2 - 1) * maxY);
+		const rot = Math.round((Math.random()*2 - 1) * 30);
+		const scale = (Math.random()*0.45 + 0.75).toFixed(2);
+		sp.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg) scale(${scale})`;
+		sp.style.opacity = '0.98';
+		// color the letters red while scattered for a bold pop
+		try{ sp.style.color = '#ff1c1c'; sp.style.textShadow = '0 0 14px rgba(255,28,28,0.18)'; }catch(e){}
+	});
+
+	// tactile feedback for scatter
+	try{ if(navigator.vibrate) navigator.vibrate([40,20,40]); }catch(e){}
+
+	// after scatter completes, reverse back to default positions
+	const scatterDuration = 540;
+	const reverseDelay = scatterDuration + 140;
+
+	// reverse: return letters to original positions with staggered bounce
+	setTimeout(()=>{
+		spans.forEach((sp, i)=>{
+			const delay = i * 28;
+			setTimeout(()=>{
+				// include color transition so red fades back smoothly
+				sp.style.transition = 'transform 480ms cubic-bezier(.22,1.5,.5,1), opacity 320ms ease, color 320ms ease';
+				sp.style.transform = 'translate(0,0) rotate(0deg) scale(1)';
+				sp.style.opacity = '1';
+				// revert color and shadow to let CSS default take over
+				try{ sp.style.color = ''; sp.style.textShadow = ''; }catch(e){}
+			}, delay);
+		});
+
+		// (emoji removed) — no-op here after reverse completes
+
+		// schedule next loop if enabled
+		if(window.__scatterLoop){
+			try{ clearTimeout(window.__scatterTimer); }catch(e){}
+			window.__scatterTimer = setTimeout(()=>{ try{ scatterHero(); }catch(e){} }, window.__scatterInterval || 8000);
+		}
+
+		// cleanup transient transition properties
+		const cleanupAfter = spans.length * 28 + 760;
+		setTimeout(()=>{ spans.forEach(sp=>{ sp.style.transition = ''; sp.style.willChange = ''; }); }, cleanupAfter);
+
+		// after the reverse completes, give the 'Y' a brief reposition animation
+		setTimeout(()=>{
+			try{
+				const ySpan = spans.find(s=> (s.textContent || '').trim() === 'Y');
+				if(!ySpan) return;
+				// stronger bounce: bigger offset, rotation and longer timing for more pop
+				ySpan.style.transition = 'transform 820ms cubic-bezier(.2,1.6,.38,1)';
+				ySpan.style.transform = 'translateY(40px) rotate(28deg) scale(0.86)';
+				// force reflow then do a quick rebound and settle
+				void ySpan.offsetWidth;
+				setTimeout(()=>{
+					try{
+						// rebound past the final position for a bounce
+						ySpan.style.transform = 'translateY(-8px) rotate(-6deg) scale(1.06)';
+						// then settle to final identity transform
+						setTimeout(()=>{
+							try{ ySpan.style.transition = 'transform 420ms cubic-bezier(.25,.8,.25,1)'; ySpan.style.transform = 'translate(0,0) rotate(0deg) scale(1)'; }catch(e){}
+						}, 420);
+					}catch(e){}
+				}, 40);
+			}catch(e){}
+		}, spans.length * 28 + 520);
+
+	}, reverseDelay);
+}
+
+// shopping-bag emoji removed — no show function
+
+// scatter loop control defaults
+// run scatter only on page refresh/load once
+window.__scatterLoop = false;
+window.__scatterInterval = 8500; // ms between cycles (unused when loop is false)
+
+</script>
+
+<footer>
+
+<p>&copy; 2026 Steez Gallery. All rights reserved.</p>
+
+<div class="footer-links">
+
+<a href="#">Privacy Policy</a>
+
+<a href="#">Terms of Service</a>
+
+<a href="#">Contact</a>
+
+</div>
+
+<div class="footer-bottom">
+
+Premium Streetwear Brand — Steez Gallery™
+
+</div>
+
+</footer>
+
+</body>
+</html>
