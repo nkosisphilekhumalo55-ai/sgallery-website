@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Checkout - Steez Gallery</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#050505">
+<style>
+body{font-family:Inter,system-ui,Arial,sans-serif;background:#050505;color:#fff;margin:0;min-height:100vh;}
+.container{max-width:960px;margin:0 auto;padding:28px 20px;}
+header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:28px;}
+header h1{font-size:30px;margin:0;}
+header a{color:#fff;text-decoration:none;font-weight:700;border:1px solid rgba(255,255,255,0.12);padding:10px 18px;border-radius:999px;background:rgba(255,255,255,0.06);transition:0.25s;}
+header a:hover{background:rgba(255,255,255,0.12);}
+.checkout-grid{display:grid;grid-template-columns:1fr 360px;gap:24px;}
+@media(max-width:900px){.checkout-grid{grid-template-columns:1fr;}}
+.order-summary, .payment-panel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:22px;padding:24px;}
+.order-summary h2, .payment-panel h2{margin-top:0;margin-bottom:18px;font-size:24px;}
+.product-row{display:flex;gap:16px;align-items:flex-start;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.08);}
+.product-row:last-child{border-bottom:none;}
+.product-row img{width:90px;height:80px;object-fit:cover;border-radius:12px;background:#111;}
+.product-info{flex:1;}
+.product-info strong{display:block;font-size:16px;margin-bottom:6px;}
+.product-info p{margin:0;color:#bbb;font-size:13px;line-height:1.5;}
+.product-total{font-weight:700;font-size:16px;}
+.order-footer{display:flex;justify-content:space-between;align-items:center;padding-top:18px;margin-top:20px;border-top:1px solid rgba(255,255,255,0.08);}
+.order-footer strong{font-size:20px;}
+.payment-panel p{color:#ccc;line-height:1.7;}
+.pay-methods{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0;}
+.pay-card{padding:16px;border:1px solid rgba(255,255,255,0.12);border-radius:18px;cursor:pointer;transition:all 0.22s ease;display:flex;align-items:center;gap:12px;}
+.pay-card.selected, .pay-card:hover{border-color:rgba(255,255,255,0.28);background:rgba(255,255,255,0.08);transform:translateY(-2px);}
+.pay-card svg{width:30px;height:30px;flex-shrink:0;}
+.pay-card strong{font-size:16px;display:block;}
+.instructions{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:18px;margin:18px 0;}
+.instructions strong{display:block;margin-bottom:12px;}
+.instructions p{margin:8px 0;color:#ddd;}
+.details-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;}
+.detail-box{background:rgba(255,255,255,0.06);padding:14px;border-radius:14px;border:1px solid rgba(255,255,255,0.08);}
+.detail-box strong{display:block;font-size:12px;color:#aaa;margin-bottom:6px;}
+.detail-box span{display:block;font-weight:700;font-size:16px;}
+.copy-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;}
+.copy-btn, .confirm-btn{border:none;border-radius:12px;padding:14px 20px;font-weight:700;cursor:pointer;transition:0.25s;}
+.copy-btn{background:rgba(255,255,255,0.08);color:#fff;}
+.copy-btn:hover{background:rgba(255,255,255,0.14);}
+.confirm-btn{background:#25d366;color:#050505;flex:1;}
+.confirm-btn:hover{background:#1ebb56;}
+.notice{font-size:13px;color:#aaa;margin-top:10px;}
+.empty{padding:40px 24px;text-align:center;color:#ccc;}
+.empty a{color:#fff;text-decoration:underline;}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <div>
+    <h1>Checkout</h1>
+    <p style="color:#bbb;max-width:560px;">Review your order and choose Apple Pay, Google Pay or bank transfer. Payments are settled directly into your FNB account.</p>
+  </div>
+  <a href="cart.html">← Back to Cart</a>
+</header>
+<div class="checkout-grid">
+  <section class="order-summary">
+    <h2>Order Summary</h2>
+    <div id="orderItems"></div>
+    <div class="order-footer">
+      <strong>Total</strong>
+      <span id="orderTotal">R0</span>
+    </div>
+  </section>
+  <aside class="payment-panel">
+    <h2>Payment Method</h2>
+    <p>Select a payment type. The checkout page displays your FNB account details and instructions, so the transfer goes straight into the account.</p>
+    <div class="pay-methods">
+      <button type="button" class="pay-card" id="applePayBtn" onclick="selectPayment('apple')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16.365 1.43c.03.12.45 1.332-.425 2.76-.42.68-1.14 1.556-2.18 1.525-.03-.12-.45-1.33.425-2.76.42-.68 1.14-1.556 2.18-1.525z"></path><path d="M12.93 6.648c1.06-.66 1.77-1.98 1.57-3.16-1.5.06-3.32 1.06-4.3 2.56-1.17 1.83-.64 4.45 1.05 5.87.73.65 1.6 1.01 2.4 1.01.16 0 .33-.01.49-.04-.03-.28-.05-.58-.05-.88 0-2.1 1.73-3.81 3.85-3.81.08 0 .16 0 .24.01-.2-1.73-1.6-2.98-3.24-2.98-.32 0-.64.04-.95.12z"></path></svg>
+        <div>
+          <strong>Apple Pay</strong>
+          <span>Use Apple wallet</span>
+        </div>
+      </button>
+      <button type="button" class="pay-card" id="googlePayBtn" onclick="selectPayment('google')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5h4v14H5z"></path><path d="M11 5h4v14h-4z"></path><path d="M17 5h2v14h-2z"></path></svg>
+        <div>
+          <strong>Google Pay</strong>
+          <span>Use Google wallet</span>
+        </div>
+      </button>
+    </div>
+    <div class="instructions" id="paymentInstructions">
+      <strong>Note</strong>
+      <p>This checkout is set up as a direct bank transfer to your FNB account. Apple Pay and Google Pay here are convenience options; the actual payment is sent to the bank account below.</p>
+      <p>Please use your bank app to send the final amount to FNB using the reference shown.</p>
+    </div>
+    <div class="details-grid">
+      <div class="detail-box">
+        <strong>Account Name</strong>
+        <span>Steez Gallery</span>
+      </div>
+      <div class="detail-box">
+        <strong>Account Number</strong>
+        <span id="fnbAccount">12345678901</span>
+      </div>
+      <div class="detail-box">
+        <strong>Branch Code</strong>
+        <span>250655</span>
+      </div>
+      <div class="detail-box">
+        <strong>Reference</strong>
+        <span id="paymentReference">STEEZ-0000</span>
+      </div>
+    </div>
+    <div class="copy-actions">
+      <button type="button" class="copy-btn" onclick="copyPaymentDetails()">Copy Payment Details</button>
+      <button type="button" class="confirm-btn" onclick="confirmPayment()">I Paid</button>
+    </div>
+    <p class="notice">Once payment is sent, we recommend saving your bank confirmation screenshot. The order is fulfilled after verification.</p>
+  </aside>
+</div>
+</div>
+<script>
+const CART = JSON.parse(localStorage.getItem('cart')) || [];
+const FNB_ACCOUNT = '12345678901';
+const FNB_BRANCH = '250655';
+const PAYMENT_REF = 'STEEZ-' + Math.floor(Math.random() * 9000 + 1000);
+
+function renderOrder(){
+  const container = document.getElementById('orderItems');
+  const totalEl = document.getElementById('orderTotal');
+  const refEl = document.getElementById('paymentReference');
+  refEl.textContent = PAYMENT_REF;
+
+  if(!CART.length){
+    container.innerHTML = '<div class="empty"><p>Your cart is empty.</p><p><a href="index.html">Return to shop</a></p></div>';
+    totalEl.textContent = 'R0';
+    document.querySelector('.payment-panel').style.display = 'none';
+    return;
+  }
+
+  let total = 0;
+  container.innerHTML = CART.map(item => {
+    total += Number(item.price || 0);
+    return `
+      <div class="product-row">
+        <img src="${item.img || 'https://via.placeholder.com/400'}" alt="${item.name}">
+        <div class="product-info">
+          <strong>${item.name}</strong>
+          <p>${item.specs || 'No description available.'}</p>
+        </div>
+        <div class="product-total">R${item.price}</div>
+      </div>`;
+  }).join('');
+  totalEl.textContent = 'R' + total;
+}
+
+function selectPayment(method){
+  document.getElementById('applePayBtn').classList.remove('selected');
+  document.getElementById('googlePayBtn').classList.remove('selected');
+  if(method === 'apple') document.getElementById('applePayBtn').classList.add('selected');
+  if(method === 'google') document.getElementById('googlePayBtn').classList.add('selected');
+  const instructions = document.getElementById('paymentInstructions');
+  instructions.innerHTML = `
+    <strong>${method === 'apple' ? 'Apple Pay selected' : 'Google Pay selected'}</strong>
+    <p>Use your Apple or Google wallet to complete the transfer in your bank app. The amount should be sent directly to the FNB account below.</p>
+    <p>Use the reference <strong>${PAYMENT_REF}</strong> so we can match your payment.</p>`;
+}
+
+function copyPaymentDetails(){
+  const details = `FNB Account Name: Steez Gallery\nAccount Number: ${FNB_ACCOUNT}\nBranch Code: ${FNB_BRANCH}\nReference: ${PAYMENT_REF}`;
+  navigator.clipboard.writeText(details).then(() => {
+    alert('Payment details copied to clipboard.');
+  }).catch(() => {
+    alert('Copy failed. Please copy the details manually.');
+  });
+}
+
+function confirmPayment(){
+  if(!CART.length){
+    alert('Your cart is empty.');
+    return;
+  }
+  localStorage.setItem('cart', JSON.stringify([]));
+  alert('Thank you! Your payment has been noted. We will verify it and process your order once we receive it in the FNB account.');
+  window.location.href = 'index.html';
+}
+
+renderOrder();
+</script>
+</body>
+</html>
