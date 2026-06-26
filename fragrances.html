@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SteezG.Fragrances — Colognes</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',system-ui,Arial,sans-serif;color:#fff}
+body{background:#050505;}
+.fragrance-splash{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.88);z-index:99999;pointer-events:none;}
+.fragrance-splash img{max-width:72vw;max-height:72vh;object-fit:contain;animation:flicker 1s ease-in-out forwards;}
+@keyframes flicker{0%,10%,20%,30%,50%,70%,90%,100%{opacity:1;filter:brightness(1);}5%,15%,25%,40%,60%,80%,95%{opacity:0.15;filter:brightness(2);}}
+header{padding:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:rgba(255,255,255,0.03);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,0.08);}
+header h1{font-size:28px;letter-spacing:0.6px;}
+.header-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+header a, .add-product-button{color:#fff;text-decoration:none;font-weight:700;border:1px solid rgba(255,255,255,0.12);padding:10px 18px;border-radius:999px;background:rgba(255,255,255,0.06);cursor:pointer;}
+.add-product-button{background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.16);}
+.add-product-button:hover, header a:hover{background:rgba(255,255,255,0.14);}
+section{padding:30px 24px;max-width:1160px;margin:auto;}
+.catalog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:20px;overflow:hidden;cursor:pointer;transition:all 0.3s ease;}
+.card:hover{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.16);transform:translateY(-4px);}
+.card img{width:100%;display:block;object-fit:cover;height:260px;background:#111;}
+.card-body{padding:18px;}
+.card-body h2{font-size:20px;margin-bottom:10px;}
+.card-body p{font-size:14px;line-height:1.6;color:#ccc;margin-bottom:14px;}
+.card-body span{display:inline-block;font-weight:700;color:#fff;}
+.qty-controls{display:flex;align-items:center;gap:10px;margin-top:12px;}
+.qty-btn{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700;}
+.qty-btn:hover{background:rgba(255,255,255,0.18);}
+.qty-display{font-size:14px;color:#ccc;flex:1;}
+.hero-banner{background:url('https://i.postimg.cc/W4jKH2RR/IMG-0966.jpg') center center/cover no-repeat;position:relative;padding:80px 24px;border-radius:24px;overflow:hidden;margin:24px auto;max-width:1160px;min-height:320px;}
+.hero-banner::after{content:'';position:absolute;inset:0;background:rgba(5,5,5,0.56);}
+.hero-banner div{position:relative;z-index:1;max-width:680px;}
+.hero-banner h2{font-size:42px;margin-bottom:12px;}
+.hero-banner p{font-size:16px;color:#ddd;line-height:1.7;}
+@media(max-width:768px){header{padding:18px;} .hero-banner{padding:40px 18px;} .hero-banner h2{font-size:32px;}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>SteezG.Fragrances</h1>
+    <p style="color:#bbb;font-size:14px;max-width:420px;">Shop our curated cologne collection for bold scents that last.</p>
+  </div>
+  <div class="header-actions">
+    <a href="index.html">Back to Steez Gallery</a>
+    <button class="add-product-button" type="button" onclick="showFragranceModal()">+ Add Product</button>
+  </div>
+</header>
+<div class="fragrance-splash" id="fragranceSplash"><img src="https://i.postimg.cc/26qC0M5G/1D0DBA61-BA75-429C-9D2D-928D86416613.png" alt="SteezG.Fragrances launch"></div>
+<section class="hero-banner">
+  <div>
+    <h2>New Colognes Catalog</h2>
+    <p>Discover signature scents, fresh launches and premium fragrances designed for style and strength.</p>
+  </div>
+</section>
+<section>
+  <div class="catalog-grid">
+    <article class="card">
+      <img src="https://via.placeholder.com/600x520?text=Noir+Oud" alt="Noir Oud">
+      <div class="card-body">
+        <h2>Noir Oud</h2>
+        <p>Smoky oud with bergamot, leather and warm amber for evening wear.</p>
+        <span>R750</span>
+      </div>
+    </article>
+    <article class="card">
+      <img src="https://via.placeholder.com/600x520?text=Cedar+Chrome" alt="Cedar Chrome">
+      <div class="card-body">
+        <h2>Cedar Chrome</h2>
+        <p>Fresh citrus opening with cedarwood and musk for everyday confidence.</p>
+        <span>R690</span>
+      </div>
+    </article>
+    <article class="card">
+      <img src="https://via.placeholder.com/600x520?text=Amber+Rush" alt="Amber Rush">
+      <div class="card-body">
+        <h2>Amber Rush</h2>
+        <p>Rich amber, vanilla and spice for a bold, unforgettable impression.</p>
+        <span>R820</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<div id="fragranceProductModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#0b0b0b;color:#fff;border-radius:18px;max-width:620px;width:100%;padding:22px;position:relative;max-height:90vh;overflow-y:auto;">
+    <button type="button" onclick="hideFragranceProductModal()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.08);border:none;color:#fff;padding:8px 10px;border-radius:10px;cursor:pointer;">Close</button>
+    <div id="productModalContent"></div>
+  </div>
+</div>
+
+<div id="fragranceAddModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#0b0b0b;color:#fff;border-radius:18px;max-width:520px;width:100%;padding:22px;position:relative;">
+    <button type="button" onclick="hideFragranceModal()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.08);border:none;color:#fff;padding:8px 10px;border-radius:10px;cursor:pointer;">Close</button>
+    <h2 style="margin:0 0 14px;">Add Fragrance Product</h2>
+    <form id="fragranceAddForm" style="display:flex;flex-direction:column;gap:12px;">
+      <input id="fr-name" type="text" placeholder="Product name" required style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:#fff;">
+      <input id="fr-price" type="number" placeholder="Price" required style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:#fff;">
+      <input id="fr-img" type="text" placeholder="Primary image URL" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:#fff;">
+      <div id="fr-image-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+      <button type="button" onclick="addFragranceImageField()" style="padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);color:#fff;cursor:pointer;text-align:left;">+ Add another picture</button>
+      <input id="fr-quantity" type="number" min="0" value="1" placeholder="Quantity" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:#fff;">
+      <input id="fr-specs" type="text" placeholder="Short description" style="width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:#fff;">
+      <button type="submit" style="padding:14px 18px;border-radius:12px;border:none;background:#fff;color:#000;font-weight:700;cursor:pointer;">Save Product</button>
+    </form>
+  </div>
+</div>
+
+<script>
+const WHATSAPP_STEEZ = '+27706418906';
+const WHATSAPP_FRAGRANCES = '+27706418906';
+
+function orderFragranceViaWhatsApp(){
+  const modal = document.getElementById('fragranceProductModal');
+  const contentDiv = document.getElementById('productModalContent');
+  let message = 'Hi! I\'d like to order from SteezG.Fragrances. ';
+  
+  if(contentDiv && contentDiv.querySelector('h2')) {
+    const productName = contentDiv.querySelector('h2').textContent;
+    const quantity = document.getElementById('selectedQuantity').value || 1;
+    message += `Product: ${productName}, Quantity: ${quantity}`;
+  }
+  
+  window.open(`https://wa.me/${WHATSAPP_FRAGRANCES}?text=${encodeURIComponent(message)}`, '_blank');
+}
+
+const defaultFragranceProducts = [
+  { name: 'Noir Oud', price: 750, images: ['https://via.placeholder.com/600x520?text=Noir+Oud'], quantity: 8, specs: 'Smoky oud with bergamot, leather and warm amber for evening wear.' },
+  { name: 'Cedar Chrome', price: 690, images: ['https://via.placeholder.com/600x520?text=Cedar+Chrome'], quantity: 12, specs: 'Fresh citrus opening with cedarwood and musk for everyday confidence.' },
+  { name: 'Amber Rush', price: 820, images: ['https://via.placeholder.com/600x520?text=Amber+Rush'], quantity: 6, specs: 'Rich amber, vanilla and spice for a bold, unforgettable impression.' }
+];
+
+let fragranceProducts = [];
+function loadFragranceProducts(){
+  try{
+    const raw = localStorage.getItem('fragranceProducts');
+    if(raw){
+      const saved = JSON.parse(raw);
+      if(Array.isArray(saved) && saved.length) fragranceProducts = saved;
+    }
+  }catch(e){ fragranceProducts = []; }
+  if(!fragranceProducts.length){ fragranceProducts = defaultFragranceProducts.slice(); }
+}
+
+function saveFragranceProducts(){
+  try{ localStorage.setItem('fragranceProducts', JSON.stringify(fragranceProducts)); }catch(e){}
+}
+
+function renderFragranceCatalog(){
+  const grid = document.querySelector('.catalog-grid');
+  if(!grid) return;
+  grid.innerHTML = fragranceProducts.map((item, idx) => {
+    const image = Array.isArray(item.images) && item.images.length ? item.images[0] : item.img || 'https://via.placeholder.com/600x520?text=Fragrance';
+    return `
+      <article class="card" onclick="showFragranceProductModal(${idx})">
+        <img src="${image}" alt="${item.name}">
+        <div class="card-body">
+          <h2>${item.name}</h2>
+          <p>${item.specs || ''}</p>
+          <span>R${item.price}</span>
+          <div style="margin-top:10px;color:#ccc;font-size:13px;">Stock: ${item.quantity || 0}</div>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+function showFragranceModal(){
+  const m = document.getElementById('fragranceAddModal');
+  if(!m) return;
+  resetFragranceForm();
+  m.style.display = 'flex';
+}
+
+function hideFragranceModal(){
+  const m = document.getElementById('fragranceAddModal');
+  if(!m) return;
+  m.style.display = 'none';
+}
+
+function resetFragranceForm(){
+  const form = document.getElementById('fragranceAddForm');
+  if(form) form.reset();
+  const list = document.getElementById('fr-image-list');
+  if(list) list.innerHTML = '';
+}
+
+function addFragranceImageField(){
+  const container = document.getElementById('fr-image-list');
+  if(!container) return;
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.placeholder = 'Additional image URL';
+  input.style.cssText = 'width:100%;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:transparent;color:#fff;';
+  container.appendChild(input);
+}
+
+function showFragranceProductModal(index){
+  const modal = document.getElementById('fragranceProductModal');
+  if(!modal || index < 0 || index >= fragranceProducts.length) return;
+  
+  const product = fragranceProducts[index];
+  const image = Array.isArray(product.images) && product.images.length ? product.images[0] : product.img || 'https://via.placeholder.com/600x520?text=Fragrance';
+  
+  const content = document.getElementById('productModalContent');
+  content.innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <img src="${image}" alt="${product.name}" style="width:100%;border-radius:12px;object-fit:cover;max-height:340px;">
+      <div>
+        <h2 style="font-size:28px;margin-bottom:8px;">${product.name}</h2>
+        <p style="color:#bbb;font-size:16px;margin-bottom:14px;">${product.specs || ''}</p>
+        <div style="font-size:24px;font-weight:700;margin-bottom:16px;">R${product.price}</div>
+        <div style="color:#aaa;margin-bottom:18px;">Stock Available: ${product.quantity || 0} units</div>
+        
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+          <label style="font-size:14px;color:#ccc;">Quantity:</label>
+          <div style="display:flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:4px;">
+            <button type="button" class="qty-decrease" style="background:transparent;border:none;color:#fff;padding:8px 12px;cursor:pointer;font-weight:700;font-size:16px;">−</button>
+            <input type="number" id="selectedQuantity" value="1" min="1" max="99" style="width:50px;text-align:center;background:transparent;border:none;color:#fff;font-size:16px;" readonly>
+            <button type="button" class="qty-increase" style="background:transparent;border:none;color:#fff;padding:8px 12px;cursor:pointer;font-weight:700;font-size:16px;">+</button>
+          </div>
+        </div>
+        
+        <button type="button" onclick="addFragranceToCart(${index})" style="width:100%;padding:14px 18px;border-radius:12px;border:none;background:#fff;color:#000;font-weight:700;cursor:pointer;font-size:16px;margin-bottom:10px;">Add to Cart</button>
+        <button type="button" onclick="addFragranceToWishlist(${index})" style="width:100%;padding:14px 18px;border-radius:12px;border:1px solid rgba(255,255,255,0.3);background:transparent;color:#fff;font-weight:700;cursor:pointer;font-size:16px;margin-bottom:10px;">Add to Wishlist</button>
+        <button type="button" onclick="orderFragranceViaWhatsApp()" style="width:100%;padding:14px 18px;border-radius:12px;border:none;background:#25d366;color:#fff;font-weight:700;cursor:pointer;font-size:16px;">WhatsApp Order</button>
+      </div>
+    </div>
+  `;
+  
+  modal.style.display = 'flex';
+  
+  // Attach quantity button listeners
+  const decreaseBtn = content.querySelector('.qty-decrease');
+  const increaseBtn = content.querySelector('.qty-increase');
+  const qtyInput = document.getElementById('selectedQuantity');
+  
+  decreaseBtn.addEventListener('click', function(){
+    let current = parseInt(qtyInput.value) || 1;
+    if(current > 1) qtyInput.value = current - 1;
+  });
+  
+  increaseBtn.addEventListener('click', function(){
+    let current = parseInt(qtyInput.value) || 1;
+    if(current < 99) qtyInput.value = current + 1;
+  });
+}
+
+function hideFragranceProductModal(){
+  const modal = document.getElementById('fragranceProductModal');
+  if(!modal) return;
+  modal.style.display = 'none';
+}
+
+function addFragranceToCart(index){
+  if(index < 0 || index >= fragranceProducts.length) return;
+  
+  const product = fragranceProducts[index];
+  const qtyInput = document.getElementById('selectedQuantity');
+  const quantity = parseInt(qtyInput.value) || 1;
+  
+  // Get existing cart
+  let cart = [];
+  try{
+    const raw = localStorage.getItem('cart');
+    if(raw) cart = JSON.parse(raw);
+  }catch(e){ cart = []; }
+  
+  // Add items to cart (each item separately for individual tracking)
+  for(let i = 0; i < quantity; i++){
+    const image = Array.isArray(product.images) && product.images.length ? product.images[0] : product.img || 'https://via.placeholder.com/600x520?text=Fragrance';
+    cart.push({
+      name: product.name,
+      price: product.price,
+      specs: product.specs || '',
+      img: image
+    });
+  }
+  
+  try{
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }catch(e){}
+  
+  // Show confirmation and close modal
+  alert(`Added ${quantity} × ${product.name} to cart!`);
+  hideFragranceProductModal();
+}
+
+function addFragranceToWishlist(index){
+  if(index < 0 || index >= fragranceProducts.length) return;
+  
+  const product = fragranceProducts[index];
+  
+  // Get existing wishlist
+  let wishlist = [];
+  try{
+    const raw = localStorage.getItem('wishlist');
+    if(raw) wishlist = JSON.parse(raw);
+  }catch(e){ wishlist = []; }
+  
+  // Add item to wishlist
+  const image = Array.isArray(product.images) && product.images.length ? product.images[0] : product.img || 'https://via.placeholder.com/600x520?text=Fragrance';
+  wishlist.push({
+    name: product.name,
+    price: product.price,
+    specs: product.specs || '',
+    img: image
+  });
+  
+  try{
+    localStorage.setItem('wishlist', JSON.stringify(wishlist));
+  }catch(e){}
+  
+  // Show confirmation and close modal
+  alert(`${product.name} added to wishlist!`);
+  hideFragranceProductModal();
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+  loadFragranceProducts();
+  renderFragranceCatalog();
+  const form = document.getElementById('fragranceAddForm');
+  const splashOverlay = document.getElementById('fragranceSplash');
+  if(splashOverlay){
+    setTimeout(() => { splashOverlay.style.opacity = '0'; splashOverlay.style.transition = 'opacity 0.35s ease-out'; }, 1000);
+    setTimeout(() => { if(splashOverlay.parentNode) splashOverlay.parentNode.removeChild(splashOverlay); }, 1350);
+  }
+  if(form){
+    form.addEventListener('submit', function(ev){
+      ev.preventDefault();
+      const name = document.getElementById('fr-name').value.trim();
+      const price = Number(document.getElementById('fr-price').value) || 0;
+      const primary = document.getElementById('fr-img').value.trim();
+      const quantity = Number(document.getElementById('fr-quantity').value) || 0;
+      const specs = document.getElementById('fr-specs').value.trim();
+      const extraImages = Array.from(document.querySelectorAll('#fr-image-list input')).map(i => i.value.trim()).filter(Boolean);
+      if(!name || !price){
+        return alert('Please enter a product name and price.');
+      }
+      const images = primary ? [primary, ...extraImages] : extraImages;
+      const item = { name, price, specs, quantity, images };
+      fragranceProducts.unshift(item);
+      saveFragranceProducts();
+      renderFragranceCatalog();
+      hideFragranceModal();
+    });
+  }
+});
+</script>
+</body>
+</html>
