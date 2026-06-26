@@ -10,32 +10,70 @@
 body{font-family:Inter,system-ui,Arial;background:#050505;color:#fff;padding:30px}
 a{color:#fff}
 .container{max-width:920px;margin:0 auto}
-.item{display:flex;gap:16px;align-items:center;padding:12px;border:1px solid rgba(255,255,255,0.06);border-radius:10px;margin-bottom:12px}
-.item img{width:100px;height:80px;object-fit:cover;border-radius:8px}
-.controls{margin-left:auto;display:flex;gap:8px}
-.btn{padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
+.header-nav{display:flex;gap:12px;margin-bottom:24px;flex-wrap:wrap;align-items:center;}
+.header-nav h1{margin:0;}
+.header-nav a{text-decoration:none;font-weight:700;border:1px solid rgba(255,255,255,0.12);padding:10px 18px;border-radius:999px;background:rgba(255,255,255,0.06);cursor:pointer;font-size:14px;}
+.header-nav a:hover{background:rgba(255,255,255,0.12);}
+.item{display:flex;gap:16px;align-items:center;padding:16px;border:1px solid rgba(255,255,255,0.06);border-radius:10px;margin-bottom:12px}
+.item img{width:120px;height:100px;object-fit:cover;border-radius:8px}
+.item-info{flex:1;}
+.item-info strong{display:block;font-size:16px;margin-bottom:4px;}
+.item-info .price{font-weight:700;font-size:16px;color:#fff;}
+.item-info .specs{color:#aaa;font-size:13px;margin-top:4px;}
+.controls{display:flex;gap:8px;}
+.btn{padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:700;font-size:13px;}
 .btn-danger{background:#ff1c1c;color:#fff}
-.btn-primary{background:#fff;color:#000}
-.empty{opacity:0.7}
+.btn-danger:hover{background:#ff3333;}
+.empty{opacity:0.7;text-align:center;padding:40px 20px;}
+.summary{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:20px;margin:24px 0;}
+.summary strong{display:block;font-size:20px;margin-bottom:14px;}
+.checkout-section{display:flex;gap:12px;flex-wrap:wrap;}
+.checkout-btn{padding:14px 28px;border-radius:12px;border:none;background:#fff;color:#000;font-weight:700;cursor:pointer;font-size:16px;}
+.checkout-btn:hover{background:#f0f0f0;}
+.whatsapp-btn{padding:14px 28px;border-radius:12px;border:none;background:#25d366;color:#fff;font-weight:700;cursor:pointer;font-size:16px;}
+.whatsapp-btn:hover{background:#1ebb56;}
 </style>
 </head>
 <body>
 <div class="container">
-<h1>Cart</h1>
-<div id="items"></div>
-<p id="total"></p>
-<p><a href="index.html">← Back to shop</a></p>
+<div class="header-nav">
+  <h1>Cart</h1>
+  <a href="index.html">← Back to shop</a>
 </div>
+<div id="items"></div>
+<div id="summary"></div>
+</div>
+
 <script>
+const WHATSAPP_STEEZ = '+27706418906';
+const WHATSAPP_FRAGRANCES = '+27706418906';
+
+function openWhatsAppOrder(){
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  let message = 'Hi! I\'d like to place an order for: ';
+  
+  if(cart.length > 0) {
+    const items = cart.map(p => `${p.name} (R${p.price})`).join(', ');
+    message += items;
+  } else {
+    message += 'Please check my cart.';
+  }
+  
+  window.open(`https://wa.me/${WHATSAPP_STEEZ}?text=${encodeURIComponent(message)}`, '_blank');
+}
+
 function renderCart(){
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const el = document.getElementById('items');
+  const summary = document.getElementById('summary');
   el.innerHTML = '';
+  summary.innerHTML = '';
+  
   if(!cart.length){
-    el.innerHTML = '<p class="empty">Your cart is empty.</p>';
-    document.getElementById('total').innerText = '';
+    el.innerHTML = '<div class="empty"><p>Your cart is empty.</p><p style="margin-top:12px;"><a href="index.html" style="color:#fff;text-decoration:underline;">Browse products</a></p></div>';
     return;
   }
+  
   let total = 0;
   cart.forEach((p,i)=>{
     total += Number(p.price||0);
@@ -43,17 +81,27 @@ function renderCart(){
     div.className = 'item';
     div.innerHTML = `
       <img src="${p.img||'https://via.placeholder.com/400'}" alt="${p.name}">
-      <div>
+      <div class="item-info">
         <strong>${p.name}</strong>
-        <div>R${p.price}</div>
-        <div style="color:#aaa;font-size:13px">${p.specs||''}</div>
+        <div class="price">R${p.price}</div>
+        <div class="specs">${p.specs||''}</div>
       </div>
       <div class="controls">
         <button class="btn btn-danger" data-i="${i}">Remove</button>
       </div>`;
     el.appendChild(div);
   });
-  document.getElementById('total').innerHTML = '<strong>Total: R' + total + '</strong> <button id="checkout" class="btn btn-primary">Checkout</button>';
+  
+  summary.innerHTML = `
+    <div class="summary">
+      <strong>Total: R${total}</strong>
+      <div class="checkout-section">
+        <button class="checkout-btn" id="checkout">Checkout</button>
+        <button class="whatsapp-btn" onclick="openWhatsAppOrder()">WhatsApp Order</button>
+      </div>
+    </div>
+  `;
+  
   document.querySelectorAll('.btn-danger').forEach(b=>b.addEventListener('click',e=>{
     const idx = Number(e.currentTarget.getAttribute('data-i'));
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -61,9 +109,11 @@ function renderCart(){
     localStorage.setItem('cart', JSON.stringify(cart));
     renderCart();
   }));
-  const co = document.getElementById('checkout');
-  if(co) co.addEventListener('click', ()=>{ alert('Checkout placeholder — integrate payment gateway'); });
+  
+  const checkoutBtn = document.getElementById('checkout');
+  if(checkoutBtn) checkoutBtn.addEventListener('click', ()=>{ window.location.href = 'checkout.html'; });
 }
+
 renderCart();
 </script>
 </body>
