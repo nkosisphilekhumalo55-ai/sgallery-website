@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Steez Club — Thank you</title>
+  <style>
+    body{background:#050505;color:#fff;font-family:Inter,system-ui,Arial,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
+    .card{background:#0b0b0b;padding:28px;border-radius:12px;border:1px solid rgba(255,255,255,0.06);max-width:540px;text-align:center}
+    a{color:#fff;text-decoration:underline}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Thanks for joining Steez Club</h1>
+    <p id="msg">Saving your email…</p>
+    <p style="margin-top:18px"><a href="index.html">Return to shop</a></p>
+  </div>
+
+  <script>
+    function getQuery(name){
+      const params = new URLSearchParams(location.search);
+      return params.get(name) || '';
+    }
+    const email = getQuery('email');
+    if(email){
+      try{ localStorage.setItem('steez_club_email', email); }catch(e){}
+      document.getElementById('msg').innerText = 'We sent a welcome message to ' + email + ' (check your inbox).';
+    } else {
+      const stored = localStorage.getItem('steez_club_email');
+      if(stored) document.getElementById('msg').innerText = 'You are subscribed as ' + stored;
+      else document.getElementById('msg').innerText = 'No email received.';
+    }
+  </script>
+</body>
+</html>
